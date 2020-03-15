@@ -13,7 +13,7 @@ public class JWTUtils {
 	/**
 	 * Gera um token JWT para autenticar o usuário
 	 * 
-	 * @param User user Instância do usuário a ser autenticado
+	 * @param Usuario user Instância do usuário a ser autenticado
      * @param String secret Seed para geração do token. Deve ser a mesma utilizada para autenticar
 	 */
 	public static HashMap<String, String> generateJWT(Usuario user, String secret) {

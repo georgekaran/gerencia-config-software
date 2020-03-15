@@ -10,7 +10,7 @@
 
 
 CREATE TABLE IF NOT EXISTS cliente (
-  id INT NOT NULL,
+  id SERIAL NOT NULL,
   nome VARCHAR(200) NOT NULL,
   Endereco VARCHAR(200) NULL,
   telefone VARCHAR(200) NULL,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS cliente (
 -- Table item
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS item (
-  id INT NOT NULL,
+  id SERIAL NOT NULL,
   nome VARCHAR(200) NOT NULL,
   vlr_unitario DOUBLE PRECISION NOT NULL,
   status CHAR(1) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS item (
 -- Table forma_de_pagamento
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS forma_de_pagamento (
-  id INT NOT NULL,
+  id SERIAL NOT NULL,
   descricao VARCHAR(200) NOT NULL,
   status CHAR(1) NOT NULL,
   PRIMARY KEY (id));
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS forma_de_pagamento (
 -- Table venda
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS venda (
-  id INT NOT NULL,
+  id SERIAL NOT NULL,
   id_cliente INT NOT NULL,
   id_forma_de_pagamento INT NOT NULL,
   data_venda DATE NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS venda_item (
 -- Table titulos_receber
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS titulos_receber (
-  id INT NOT NULL,
+  id SERIAL NOT NULL,
   venda_id INT NOT NULL,
   data_vencimento DATE NOT NULL,
   data_pagamento DATE NULL,
@@ -116,8 +116,9 @@ CREATE TABLE IF NOT EXISTS titulos_receber (
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS usuario (
-  id INT NOT NULL,
-  login VARCHAR(250) NOT NULL,
+  id SERIAL NOT NULL,
+  nome VARCHAR(250) NOT NULL,
+  email VARCHAR(250) NOT NULL,
   senha VARCHAR(250) NOT NULL,
   status CHAR(1) NOT NULL,
   PRIMARY KEY (id));

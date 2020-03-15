@@ -1,0 +1,8 @@
+{
+  "short_name": "AGI - PDV",
+  "name": "AGI - PDV",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

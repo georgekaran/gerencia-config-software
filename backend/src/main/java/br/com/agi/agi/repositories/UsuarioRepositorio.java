@@ -12,6 +12,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
+   @Query("FROM Usuario u " +
+           "WHERE LOWER(u.email) like ?1")
    Optional<Usuario> findByEmail(String email);
 
    @Query("FROM Usuario u " +
