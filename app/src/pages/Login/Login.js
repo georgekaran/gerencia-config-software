@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import * as Yup from 'yup';
+import { useDispatch } from "react-redux";
+import * as Yup from "yup";
 import {
   Button,
   Card,
@@ -14,15 +15,21 @@ import {
   Col
 } from "reactstrap";
 
+import { signInUser } from "../../actions/userActions";
+
 import Input from "../../components/Input/Input";
 import { User } from "../../utils/Api/Api";
 
 const LoginSchema = Yup.object().shape({
-  username: Yup.string().email("Não é um email válido.").required("Campo obrigatório."),
-  password: Yup.string().required('Campo obrigatório.'),
+  username: Yup.string()
+    .email("Não é um email válido.")
+    .required("Campo obrigatório."),
+  password: Yup.string().required("Campo obrigatório.")
 });
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const { register, handleSubmit, errors } = useForm({
     validationSchema: LoginSchema
   });
@@ -30,7 +37,7 @@ const Login = () => {
   const onSubmit = data => {
     User.signIn(data)
       .then(res => {
-        console.log(res);
+        dispatch(signInUser(res.data.user));
       })
       .catch(e => {
         console.log(e);

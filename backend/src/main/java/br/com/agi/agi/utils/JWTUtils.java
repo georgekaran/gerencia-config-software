@@ -16,7 +16,7 @@ public class JWTUtils {
 	 * @param Usuario user Instância do usuário a ser autenticado
      * @param String secret Seed para geração do token. Deve ser a mesma utilizada para autenticar
 	 */
-	public static HashMap<String, String> generateJWT(Usuario user, String secret) {
+	public static HashMap<String, Object> generateJWT(Usuario user, String secret) {
 
         Date expiresAt = getExpirationTime();
 
@@ -25,7 +25,7 @@ public class JWTUtils {
                 .withExpiresAt(expiresAt)
                 .sign(Algorithm.HMAC256(secret));
         
-        HashMap<String, String> output = new HashMap<>();
+        HashMap<String, Object> output = new HashMap<>();
         output.put("token", jwt);
         output.put("type", "bearer");
         output.put("expires_at", "" + expiresAt.getTime());

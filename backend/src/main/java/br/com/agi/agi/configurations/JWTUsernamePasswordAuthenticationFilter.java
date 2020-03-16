@@ -39,7 +39,8 @@ public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
         
         CORSFilter.addHeaders(response);
 
-        HashMap<String, String> output = JWTUtils.generateJWT(user, secret);
+        HashMap<String, Object> output = JWTUtils.generateJWT(user, secret);
+        output.put("user", user);
 
         this.returnJson(response, output);
     }
@@ -53,13 +54,13 @@ public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         CORSFilter.addHeaders(response);
 
-        HashMap<String, String> output = new HashMap<>();
+        HashMap<String, Object> output = new HashMap<>();
         output.put("error", "Invalid credentials");
 
         this.returnJson(response, output);
     }
 
-    private void returnJson(HttpServletResponse response, HashMap<String, String> output) throws IOException {
+    private void returnJson(HttpServletResponse response, HashMap<String, Object> output) throws IOException {
         response.addHeader("Content-Type", "application/json");
         PrintWriter out = response.getWriter();
         String json = new ObjectMapper().writeValueAsString(output);
