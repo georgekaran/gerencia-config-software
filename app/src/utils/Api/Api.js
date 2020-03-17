@@ -7,5 +7,11 @@ export const User = {
    * @param data Objeto contendo username e password
    * @returns Promise
    */
-  signIn: (data) => Axios.post('login', qs.stringify(data))
+  signIn: (data) => Axios.post('login', qs.stringify(data)),
+
+  /**
+   * @param email User's email
+   * @returns Promise
+   */
+  findByEmail: (email) => Axios.get(`/api/users/${email}`),
 };

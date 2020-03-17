@@ -40,7 +40,7 @@ public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
         CORSFilter.addHeaders(response);
 
         HashMap<String, Object> output = JWTUtils.generateJWT(user, secret);
-        output.put("user", user);
+        output.put("email", user.getEmail());
 
         this.returnJson(response, output);
     }

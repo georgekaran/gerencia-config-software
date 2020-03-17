@@ -1,5 +1,5 @@
-export const signInUser = (user = {}) => ({
-  type: 'SIGNIN_USER',
+export const userFetchSucceeded = (user = {}) => ({
+  type: 'USER_FETCH_SUCCEEDED',
   user
 });
 

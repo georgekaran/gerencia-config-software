@@ -4,12 +4,10 @@ let contextReducerDefaultState = {
 
 const userReducer = (state = contextReducerDefaultState, action) => {
   switch (action.type) {
-    case "SIGNIN_USER":
-      return { user: action.user };
-    case "GET_USER":
-      return { state };
+    case "USER_FETCH_SUCCEEDED":
+      return { ...state, user: action.user };
     case "SIGNOUT_USER":
-      return { user: null };
+      return { ...state, user: null };
     default:
       return state;
   }

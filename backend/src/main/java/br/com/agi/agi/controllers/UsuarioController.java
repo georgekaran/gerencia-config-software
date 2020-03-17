@@ -41,9 +41,9 @@ public class UsuarioController {
         return service.findAll(page, size);
     }
 
-    @GetMapping("/{id}")
-    public Usuario get(@PathVariable("id") Long id) {
-        Optional<Usuario> user = service.findById(id);
+    @GetMapping("/{email}")
+    public Usuario get(@PathVariable("email") String email) {
+        Optional<Usuario> user = service.findByEmail(email);
 
         if (!user.isPresent()) {
             throw new NotFoundException();

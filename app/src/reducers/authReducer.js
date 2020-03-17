@@ -7,7 +7,7 @@ let authReducerDefaultState = {
 const authReducer = (state = authReducerDefaultState, action) => {
   switch (action.type) {
     case "SET_AUTH":
-      return { ...action.auth };
+      return { ...state, ...action.payload };
     case "REMOVE_AUTH":
       return { user: null };
     default:

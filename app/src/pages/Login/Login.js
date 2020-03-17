@@ -15,7 +15,7 @@ import {
   Col
 } from "reactstrap";
 
-import { signInUser } from "../../actions/userActions";
+import { setAuth } from "../../actions/authActions";
 
 import Input from "../../components/Input/Input";
 import { User } from "../../utils/Api/Api";
@@ -37,7 +37,7 @@ const Login = () => {
   const onSubmit = data => {
     User.signIn(data)
       .then(res => {
-        dispatch(signInUser(res.data.user));
+        dispatch(setAuth(res.data));
       })
       .catch(e => {
         console.log(e);

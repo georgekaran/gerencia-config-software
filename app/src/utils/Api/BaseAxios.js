@@ -6,9 +6,9 @@ const Axios = axios.create({
 });
 
 Axios.interceptors.request.use(async config => {
-  const token = undefined;
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
+  const auth = JSON.parse(localStorage.getItem("__AGI_AUTH")) || {};
+  if (auth.token) {
+    config.headers['Authorization'] = `Bearer ${auth.token}`;
     config.headers['Content-Type'] = 'application/json';
   }
   return config;

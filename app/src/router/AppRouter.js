@@ -13,7 +13,7 @@ const isAuth = false;
 
 export default function AppRouter() {
 
-  const user = useSelector(state => state.user);
+  const user = false;
 
   const privateRoutes = useMemo(() => {
     return routes.filter(route => route.privateRoute);
@@ -23,7 +23,7 @@ export default function AppRouter() {
     return routes.filter(route => !route.privateRoute);
   }, [routes]);
 
-  return !!user === false ? (
+  return user === false ? (
     <Auth>
       <Router>
         <Switch>
