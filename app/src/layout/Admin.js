@@ -1,28 +1,28 @@
 import React from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import AdminNavbar from "../components/Navbar/AdminNavbar";
 import Sidebar from "../components/Sidebar/Sidebar";
-
 import routes from '../router/routes';
+import Home from "../pages/Home/Home";
 
-export default function Admin({ children }) {
+export default function Admin({ children, path }) {
+
   return (
     <>
       <Sidebar
-        {...this.props}
         routes={routes}
-        logo={{
-          innerLink: "/admin/index",
-          imgSrc: undefined,
-          imgAlt: "..."
-        }}
+
       />
-      <div className="main-content" ref="mainContent">
+      <div className="main-content" >
         <AdminNavbar
-          {...this.props}
-          brandText={this.getBrandText(this.props.location.pathname)}
+          brandText="AAAAAaaa"
         />
-        {children}
+          <Switch>
+              <Route exact path={path}>
+                  <Home />
+              </Route>
+          </Switch>
       </div>
     </>
   );

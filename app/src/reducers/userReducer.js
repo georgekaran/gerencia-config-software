@@ -1,13 +1,12 @@
-let contextReducerDefaultState = {
-  user: null
+let userDefaultState = {
 };
 
-const userReducer = (state = contextReducerDefaultState, action) => {
+const userReducer = (state = userDefaultState, action) => {
   switch (action.type) {
     case "USER_FETCH_SUCCEEDED":
-      return { ...state, user: action.user };
+      return { ...action.user };
     case "SIGNOUT_USER":
-      return { ...state, user: null };
+      return { };
     default:
       return state;
   }

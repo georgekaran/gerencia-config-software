@@ -34,17 +34,16 @@ import {
   Media
 } from "reactstrap";
 
-class AdminNavbar extends React.Component {
-  render() {
-    return (
+const AdminNavbar = () => {
+  return (
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
           <Container fluid>
             <Link
-              className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-              to="/"
+                className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
+                to="/"
             >
-              {this.props.brandText}
+              {"BRAND"}
             </Link>
             <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
               <FormGroup className="mb-0">
@@ -64,8 +63,8 @@ class AdminNavbar extends React.Component {
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
                       <img
-                        alt="..."
-                        src={undefined}
+                          alt="..."
+                          src={null}
                       />
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
@@ -106,8 +105,7 @@ class AdminNavbar extends React.Component {
           </Container>
         </Navbar>
       </>
-    );
-  }
+  );
 }
 
 export default AdminNavbar;

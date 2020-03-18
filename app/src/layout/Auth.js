@@ -1,7 +1,29 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
+import routes from "../router/routes";
+import {Redirect, Route, Switch} from "react-router-dom";
 
-export default function Auth({ children }) {
+import PrivateRoute from "../router/PrivateRoute";
+import Login from "../pages/Login/Login";
+
+export default function Auth({ children, path }) {
+
+  const getRoutes = routes => {
+    return routes.map((prop, key) => {
+      if (prop.layout === "/auth") {
+        return (
+            <Route
+                path={prop.layout + prop.path}
+                component={prop.component}
+                key={key}
+            />
+        );
+      } else {
+        return null;
+      }
+    });
+  };
+
   return (
     <div className="main-content bg-gradient-info ">
       <div className="header py-lg-8">
@@ -21,7 +43,11 @@ export default function Auth({ children }) {
       </div>
       <Container className="mt--8 pb-1">
         <Row className="justify-content-center">
-          {children}
+          <Switch>
+            <Route exact path={path}>
+              <Login />
+            </Route>
+          </Switch>
         </Row>
       </Container>
     </div>

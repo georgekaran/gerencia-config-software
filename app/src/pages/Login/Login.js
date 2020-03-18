@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
@@ -40,9 +40,11 @@ const Login = () => {
         dispatch(setAuth(res.data));
       })
       .catch(e => {
-        console.log(e);
+        console.error(e);
       });
   };
+
+  useEffect(() => localStorage.removeItem("__AGI_AUTH"), []);
 
   return (
     <>
