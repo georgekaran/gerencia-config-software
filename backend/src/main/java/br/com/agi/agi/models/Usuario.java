@@ -50,7 +50,7 @@ public class Usuario extends Model {
     }
 
     @JsonProperty
-    public void setPassword(String senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 

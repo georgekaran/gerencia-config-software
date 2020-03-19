@@ -6,7 +6,9 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import routes from '../router/routes';
 import Home from "../pages/Home/Home";
 
-export default function Admin({ children, path }) {
+export default function Admin({ children, path, ...props }) {
+
+    console.log(props);
 
   return (
     <>
@@ -14,7 +16,7 @@ export default function Admin({ children, path }) {
         routes={routes}
 
       />
-      <div className="main-content" >
+      <div className="main-content bg-gradient-info" >
         <AdminNavbar
           brandText="AAAAAaaa"
         />

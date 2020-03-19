@@ -1,9 +1,7 @@
 package br.com.agi.agi.controllers;
 
-import java.util.Map;
 import java.util.Optional;
 
-import br.com.agi.agi.models.Client;
 import br.com.agi.agi.models.PasswordHelper;
 import br.com.agi.agi.services.ClientService;
 import br.com.agi.agi.utils.HashUtils;
@@ -68,7 +66,7 @@ public class UsuarioController {
 
         if (!ObjectUtils.nullOrEmpty(passwordHelper)) {
             Usuario user = userOptional.get();
-            user.setPassword(HashUtils.hashPassword(passwordHelper.password));
+            user.setSenha(HashUtils.hashPassword(passwordHelper.password));
             service.save(user);
             return ResponseEntity.status(HttpStatus.OK).body(null);
         }
@@ -79,6 +77,9 @@ public class UsuarioController {
     public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody Usuario userBody) {
         try {
             Optional<Usuario> user = service.findOne(id);
+            if (!user.isPresent()) {
+                throw new NotFoundException();
+            }
             Usuario userCurrent = user.get();
 
             userCurrent.setEmail(userBody.getEmail());
@@ -93,7 +94,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity create(@RequestBody Usuario user) {
         try {
-            user.setPassword(HashUtils.hashPassword(user.getSenha()));
+            user.setSenha(HashUtils.hashPassword(user.getSenha()));
             user.setStatus('A');
             Usuario userCreated = service.save(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);

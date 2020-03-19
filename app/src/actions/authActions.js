@@ -6,7 +6,7 @@ export const setAuth = (auth = {}) => {
   }
 };
 
-export const deleteAuth = (auth = null) => ({
+export const deleteAuth = (auth = {}) => ({
   type: 'REMOVE_AUTH',
   payload: auth
 });

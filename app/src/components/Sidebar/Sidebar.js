@@ -75,7 +75,7 @@ const Sidebar = () => {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          {/* Brand */}
+           AGI - PDV
           {/*{logo ? (*/}
           {/*  <NavbarBrand className="pt-0" {...navbarBrandProps}>*/}
           {/*    <img*/}
@@ -85,7 +85,6 @@ const Sidebar = () => {
           {/*    />*/}
           {/*  </NavbarBrand>*/}
           {/*) : null}*/}
-          {/* User */}
           <Nav className="align-items-center d-md-none">
             <UncontrolledDropdown nav>
               <DropdownToggle nav className="nav-link-icon">

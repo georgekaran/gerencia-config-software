@@ -44,8 +44,6 @@ const Login = () => {
       });
   };
 
-  useEffect(() => localStorage.removeItem("__AGI_AUTH"), []);
-
   return (
     <>
       <Col lg="5" md="7">

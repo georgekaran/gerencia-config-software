@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
-import {Switch, BrowserRouter as Router, Route, Redirect} from "react-router-dom";
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from "react";
+import {Switch, BrowserRouter as Router, Redirect} from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux';
 
 import Auth from "../layout/Auth";
 import Admin from "../layout/Admin";
@@ -8,16 +8,34 @@ import Admin from "../layout/Admin";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
+import { setAuth } from "../actions/authActions";
+import { isTokenExpirationDateValid, getAuth, removeAuth } from "../utils/TokenUtils";
+
 export default function AppRouter() {
+    const [isTokenValid, setTokenValid] = useState(false);
 
-    const user = useSelector(store => store.user);
+    const dispatch = useDispatch();
+    const auth = useSelector(store => store.auth);
 
-    console.log(user);
+    useEffect(() => {
+        if (auth.token == null) {
+            if (isTokenExpirationDateValid()) {
+                setTokenValid(true);
+                dispatch(setAuth(getAuth()));
+                return;
+            }
+            removeAuth();
+        } else {
+            setTokenValid(true);
+        }
+    }, [auth]);
 
-    return user.id != null ? (
+    console.log(auth);
+
+    return isTokenValid ? (
         <Router>
             <Switch>
-                <PrivateRoute exact path="/" component={Admin} isAuth={user.id != null} />
+                <PrivateRoute exact path="/" component={Admin} isAuth={isTokenValid} />
             </Switch>
         </Router>
     ) : (
