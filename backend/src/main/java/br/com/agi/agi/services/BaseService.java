@@ -27,7 +27,7 @@ public abstract class BaseService<T extends Model, PK extends Serializable, R ex
     }
 
     public List<T> findAll() {
-        Sort order = new Sort(Sort.Direction.DESC, "id");
+        Sort order = Sort.by(Sort.Direction.DESC, "id");
         return (List<T>) this.getBaseRepository().findAll(order);
     }
 

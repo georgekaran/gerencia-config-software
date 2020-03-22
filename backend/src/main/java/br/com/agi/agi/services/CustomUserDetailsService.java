@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.agi.agi.models.CustomUserDetails;
 import br.com.agi.agi.models.Usuario;
-import br.com.agi.agi.repositories.UsuarioRepositorio;
+import br.com.agi.agi.repositories.UsuarioRepository;
 
 import java.util.Optional;
 
@@ -16,12 +16,12 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private UsuarioRepository usuarioRepository;
 
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Usuario> optionalUsers = usuarioRepositorio.findByEmail(email);
+        Optional<Usuario> optionalUsers = usuarioRepository.findByEmail(email);
 
         optionalUsers
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado"));

@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import br.com.agi.agi.services.CustomUserDetailsService;
-import br.com.agi.agi.utils.HashUtils;
 
 import javax.sql.DataSource;
 
@@ -40,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and()
             .authorizeRequests()
-                .antMatchers("/api/validateToken").permitAll()
+                .antMatchers("/api/users").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
@@ -56,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Filtro para gerar o token JWT quando o usuário se autentica
+     * Filter that generate JWT token when user logged in.
      * 
      * @return
      * @throws Exception
@@ -70,10 +69,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /**
-     * Configura o filtro de autenticação JWT
-     * Esse  
+     * Config the JWT authentication filter.
      * 
-     * @return
+     * @return JWTBasicAuthenticationFilter
      * @throws Exception
      */
     @Bean
@@ -82,9 +80,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Configura a aplicação para ela retornar erro 401 quando usuário não está autenticado
+     * Config the password encoder for user authentication.
+     *
+     * @return PasswordEncoder
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new PasswordConfig();
+    }
+
+    /**
+     * Config application to return 401 when user is not authenticated.
      * 
-     * @return
+     * @return AuthenticationEntryPoint
      */
     public AuthenticationEntryPoint restAuthenticationEntryPoint() {
         return new RestAuthenticationEntryPoint();
@@ -94,25 +102,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .userDetailsService(userDetailsService)
-            .passwordEncoder(getPasswordEncoder());
+            .passwordEncoder(passwordEncoder());
     }
-
-    private PasswordEncoder getPasswordEncoder() {
-        return new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence charSequence) {
-                return HashUtils.hashPassword(charSequence.toString());
-            }
-
-            @Override
-            public boolean matches(CharSequence charSequence, String s) {
-                try {
-                    return HashUtils.checkPassword(charSequence.toString(), s);
-                } catch (Exception e) {
-                    return false;
-                }
-            }
-        };
-    }
-
 }

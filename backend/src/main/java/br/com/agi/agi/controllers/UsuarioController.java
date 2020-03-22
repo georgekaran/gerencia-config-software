@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.agi.agi.models.Usuario;
@@ -107,11 +108,15 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         try {
-            Optional<Usuario> user = service.findOne(id);
-            if (!user.isPresent()) {
+            Optional<Usuario> userOptional = service.findOne(id);
+            if (!userOptional.isPresent()) {
                 throw new NotFoundException();
             }
-            service.delete(user.get());
+
+            Usuario user = userOptional.get();
+            user.setStatus('I');
+            service.save(user);
+
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (Exception e) {
             e.printStackTrace();

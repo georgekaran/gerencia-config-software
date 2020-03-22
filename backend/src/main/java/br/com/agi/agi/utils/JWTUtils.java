@@ -11,10 +11,10 @@ import java.util.HashMap;
 public class JWTUtils {
 
 	/**
-	 * Gera um token JWT para autenticar o usuário
+	 * Generate a JWT token
 	 * 
-	 * @param Usuario user Instância do usuário a ser autenticado
-     * @param String secret Seed para geração do token. Deve ser a mesma utilizada para autenticar
+	 * @param user User's instance to be authenticated.
+     * @param secret Seed to generate token. Must be the same used for authentication.
 	 */
 	public static HashMap<String, Object> generateJWT(Usuario user, String secret) {
 
@@ -36,7 +36,7 @@ public class JWTUtils {
     private static Date getExpirationTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        calendar.add(Calendar.HOUR_OF_DAY, 2);
         return calendar.getTime();
     }
 

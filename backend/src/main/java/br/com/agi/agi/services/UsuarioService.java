@@ -10,14 +10,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.agi.agi.models.Usuario;
-import br.com.agi.agi.repositories.UsuarioRepositorio;
+import br.com.agi.agi.repositories.UsuarioRepository;
 
 @Service
-public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepositorio> {
+public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository> {
 
     @Autowired
-    public UsuarioService(UsuarioRepositorio usuarioRepositorio) {
-        super(usuarioRepositorio);
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        super(usuarioRepository);
     }
 
     public Page<Usuario> search(

@@ -10,11 +10,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 /**
- * 
  * Componente para requisições não autenticadas.
  * Quando o SpringSecurity não conseguir autenticar o usuário, ele simplesmente
  * retornará erro 401, e não a tela de login que é o comportamente padrão
- * 
  */
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {

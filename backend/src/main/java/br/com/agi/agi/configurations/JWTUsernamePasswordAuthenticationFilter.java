@@ -21,11 +21,9 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 
 /**
- * 
- * Esse filtro gera um token JWT e retorna para o usuário
- * O usuário deve armazenar este token e enviar pelo header "Authorization"
- * nas requisições subsequentes
- * 
+ * Filter whom generate JWT token and returns to the user.
+ * User must store this token and send it through header "Authorization" on the following requests.
+ *
  */
 public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

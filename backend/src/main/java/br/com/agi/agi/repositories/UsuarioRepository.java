@@ -10,14 +10,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
    @Query("FROM Usuario u " +
-           "WHERE LOWER(u.email) like ?1")
+           "WHERE LOWER(u.email) like ?1 and u.status <> 'I'")
    Optional<Usuario> findByEmail(String email);
 
    @Query("FROM Usuario u " +
-           "WHERE LOWER(u.email) like %:searchTerm%")
+           "WHERE LOWER(u.email) like %:searchTerm% and u.status <> 'I'")
    Page<Usuario> search(@Param("searchTerm") String searchTerm, Pageable pageable);
 
 }

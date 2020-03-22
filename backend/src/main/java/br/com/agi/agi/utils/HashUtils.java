@@ -5,34 +5,39 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 public class HashUtils {
 
 	/**
-	 * Workload ao gerar hash de password como bcrypt
-	 * 
+	 * Indicates that the hash is a bcrypt hash.
+	 * @link https://en.wikipedia.org/wiki/Bcrypt#Description
 	 */
-	private static int workload = 12;
+	private static final String HASH_IN_MODULAR_CRYPT_FORMAT = "$2a$";
 
 	/**
-	 * Gera o hash de um password, utilizando o algoritmo bcrypt
-	 * 
-	 * @param password_plaintext A senha a ser criptografada
-	 * @return String de tamanho 60 com a senha criptograda no formato crypt(3)
+	 * Number of hashes rounds performed by Bcrypt algorithm.
 	 */
-	public static String hashPassword(String password_plaintext) {
-		String salt = BCrypt.gensalt(workload);
-		return BCrypt.hashpw(password_plaintext, salt);
+	private static final int BCRYPT_ROUNDS = 12;
+
+	/**
+	 * Generate hash for a password with bcrypt algorithm.
+	 * 
+	 * @param rawPassword Password to be encoded.
+	 * @return String of size 60 with the password encoded in the crypt format 3.
+	 */
+	public static String hashPassword(String rawPassword) {
+		String salt = BCrypt.gensalt(BCRYPT_ROUNDS);
+		return BCrypt.hashpw(rawPassword, salt);
 	}
 
 	/**
-	 * Compara uma senha com um valor criptografado
-	 * 
-	 * @param senhaEnviada A senha recebida na requisição
-	 * @param senhaSalva   A senha criptografada salva
-	 * @return boolean - verdadeiro se a senhas combinam
+	 * Checks if the raw password matches the encoded password.
+	 * @param rawPassword Password sent via request
+	 * @param encodedPassword Encoded password
+	 *
+	 * @return boolean if the passwords matches.
 	 */
-	public static boolean checkPassword(String senhaEnviada, String senhaSalva) {
-		if (null == senhaSalva || !senhaSalva.startsWith("$2a$"))
+	public static boolean checkPassword(String rawPassword, String encodedPassword) {
+		if (null == encodedPassword || !encodedPassword.startsWith(HASH_IN_MODULAR_CRYPT_FORMAT))
 			throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
 
-		return BCrypt.checkpw(senhaEnviada, senhaSalva);
+		return BCrypt.checkpw(rawPassword, encodedPassword);
 	}
 
 }

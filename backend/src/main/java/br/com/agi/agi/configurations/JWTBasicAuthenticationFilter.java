@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import br.com.agi.agi.models.Usuario;
-import br.com.agi.agi.repositories.UsuarioRepositorio;
+import br.com.agi.agi.repositories.UsuarioRepository;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -28,14 +28,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * JWT authentication filter
  * 
- * Filtro de autenticação JWT
- * 
- * Esse filtro analisa todas as requisições, e determina se o usuário está autenticado
- * Para que o usuário seja considerado autenticado, é necessário exister o heder "Authorization",
- * contendo o token JWT ("Bearer " + token). 
- * 
- * A assinatura e a validade do token tabmém são validadas
+ * This filter analyzes every request, and determines whether the user is authenticated.
+ * To be considered authenticated, it's required to have the header "Authorization", with the JWT token.
+ * e.g: ("Bearer " + token).
  */
 public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
 
@@ -43,7 +40,7 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
     protected String secret;
 
     @Autowired
-    protected UsuarioRepositorio userRepository;
+    protected UsuarioRepository userRepository;
 
     public JWTBasicAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -52,9 +49,7 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-
         try {
-
             String authorizationHeader = request.getHeader("Authorization");
 
             if (authorizationHeader == null) {
@@ -69,11 +64,11 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
                 return;
             }
 
-            //Decodifica o token JWT
+            //Decode JWT token.
             String jwt = headerSplited[1];
             DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secret)).build().verify(jwt);
             
-            //Busca o usuario na base de dados
+            //Search for user in the database.
             String email = decodedJWT.getClaim("email").asString();
             Optional<Usuario> user = userRepository.findByEmail(email);
 
@@ -81,31 +76,21 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
                 throw new Exception("User " + email + " not found");
             }
 
-            //Monta as permissões do usuario
+            //Build user's permissions.
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-            // for (Role role: user.get().getRoles()) {
-            //     grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-            // }
 
-            //Cria a autenticação do spring security
+            //Create the authentication of Spring Security.
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, null, grantedAuthorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             chain.doFilter(request, response);
-
         } catch (JWTVerificationException ex) {
-
             CORSFilter.addHeaders(response);
             response.sendError(HttpStatus.UNAUTHORIZED.value());
-            return;
-
         } catch (Exception e) {
-
             CORSFilter.addHeaders(response);
             response.sendError(HttpStatus.NOT_FOUND.value());
-            return;
-            
         }
     }
 }
