@@ -1,9 +1,10 @@
 import React from 'react'
+import { Card, Container, Row } from "reactstrap";
 
 export default function Home() {
   return (
-    <div>
+    <Container fluid>
       Homepage
-    </div>
+    </Container>
   )
 }

@@ -15,11 +15,6 @@ import br.com.agi.agi.services.CustomUserDetailsService;
 
 import javax.sql.DataSource;
 
-/**
- * 
- * Configuração global de segurança da aplicação
- * 
- */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -39,7 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and()
             .authorizeRequests()
-                .antMatchers("/api/users").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
