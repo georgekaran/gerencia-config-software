@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
-// nodejs library to set properties for components
-import { PropTypes } from "prop-types";
+
 import routes from "../../router/routes";
 
 // reactstrap components
@@ -62,6 +61,10 @@ const Sidebar = () => {
     });
   };
 
+  const getLogo = () => {
+    return require(`../../assets/img/icons/logo_pdv.png`);
+  }
+
   const navbarBrandProps = { to: undefined, tag: Link };
   return (
     <Navbar
@@ -78,16 +81,16 @@ const Sidebar = () => {
         >
           <span className="navbar-toggler-icon" />
         </button>
-        AGI - PDV
-        {/*{logo ? (*/}
-        {/*  <NavbarBrand className="pt-0" {...navbarBrandProps}>*/}
-        {/*    <img*/}
-        {/*      alt={null}*/}
-        {/*      className="navbar-brand-img"*/}
-        {/*      src={null}*/}
-        {/*    />*/}
-        {/*  </NavbarBrand>*/}
-        {/*) : null}*/}
+
+          <NavbarBrand className="pt-0" {...navbarBrandProps}>
+            <img
+              alt={null}
+              className="navbar-brand-img"
+              src={getLogo()}
+            />
+            AGI - PDV
+          </NavbarBrand>
+
         <Nav className="align-items-center d-md-none">
           <UncontrolledDropdown nav>
             <DropdownToggle nav className="nav-link-icon">

@@ -14,4 +14,10 @@ export const User = {
    * @returns Promise
    */
   findByEmail: (email) => Axios.get(`/api/users/${email}`),
+
+  /**
+   * Fetch all users
+   * @returns Promise
+   */
+  findAll: () => Axios.get(`/api/users`),
 };
