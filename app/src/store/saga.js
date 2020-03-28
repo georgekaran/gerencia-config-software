@@ -10,8 +10,13 @@ function* fetchUser(action) {
   }
 }
 
+function* removeUser() {
+  yield put({ type: "SIGNOUT_USER" })
+}
+
 function* mySaga() {
   yield takeEvery("SET_AUTH", fetchUser);
+  yield takeEvery("REMOVE_AUTH", removeUser);
 }
 
 export default mySaga;

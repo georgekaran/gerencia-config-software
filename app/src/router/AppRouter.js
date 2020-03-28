@@ -13,37 +13,49 @@ import { isTokenExpirationDateValid, getAuth, removeAuth } from "../utils/TokenU
 
 export default function AppRouter() {
     const [isTokenValid, setTokenValid] = useState(false);
+    const [isFetching, setFetching] = useState(false);
 
     const dispatch = useDispatch();
     const auth = useSelector(store => store.auth);
 
     useEffect(() => {
+        handleAuthFetching();
+    }, [auth]);
+
+    const handleAuthFetching = async () => {
+        setFetching(true);
         if (auth.token == null) {
             if (isTokenExpirationDateValid()) {
                 setTokenValid(true);
                 dispatch(setAuth(getAuth()));
+                setFetching(false);
                 return;
             }
             removeAuth();
         } else {
             setTokenValid(true);
         }
-    }, [auth]);
+        setFetching(false);
+    };
 
-    console.log(auth);
-
-    return isTokenValid ? (
-        <Router>
-            <Switch>
-                <PrivateRoute exact path="/" component={Admin} isAuth={isTokenValid} />
-            </Switch>
-        </Router>
-    ) : (
-        <Router>
-            <Switch>
-                <PublicRoute exact path="/" component={Auth} />
-                <Redirect to={{ pathname: "/" }} />
-            </Switch>
-        </Router>
-    );
+    if (isFetching) {
+        return null;
+    } else if (isTokenValid) {
+        return (
+          <Router>
+              <Switch>
+                  <PrivateRoute exact path="/" component={Admin} isAuth={isTokenValid} />
+              </Switch>
+          </Router>
+        )
+    } else {
+        return (
+          <Router>
+              <Switch>
+                  <PublicRoute exact path="/" component={Auth} />
+                  <Redirect to={{ pathname: "/" }} />
+              </Switch>
+          </Router>
+        )
+    }
 }
