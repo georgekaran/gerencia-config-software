@@ -18,6 +18,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
    @Query("FROM Usuario u " +
            "WHERE LOWER(u.email) like %:searchTerm% and u.status <> 'I'")
-   Page<Usuario> search(@Param("searchTerm") String searchTerm, Pageable pageable);
+   Page<Usuario> findAllPageable(@Param("searchTerm") String searchTerm, Pageable pageable);
 
 }

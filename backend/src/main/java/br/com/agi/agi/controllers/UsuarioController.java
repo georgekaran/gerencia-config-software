@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.agi.agi.models.Usuario;
@@ -27,14 +26,14 @@ public class UsuarioController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping("/search")
-    public Page<Usuario> search(@RequestParam("searchTerm") String searchTerm,
+    @GetMapping("/")
+    public Page<Usuario> findAllPageable(@RequestParam(value = "search", required = false, defaultValue = "") String searchTerm,
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
-        return service.search(searchTerm, page, size);
+        return service.findAllPageable(searchTerm, page, size);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public Page<Usuario> getAll(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         return service.findAll(page, size);

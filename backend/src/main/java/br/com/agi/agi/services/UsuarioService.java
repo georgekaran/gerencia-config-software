@@ -20,7 +20,7 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
         super(usuarioRepository);
     }
 
-    public Page<Usuario> search(
+    public Page<Usuario> findAllPageable(
             final String searchTerm,
             final int page,
             final int size) {
@@ -29,7 +29,7 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
                 size,
                 Sort.by(Sort.Order.asc("id")));
 
-        return getBaseRepository().search(
+        return getBaseRepository().findAllPageable(
                 searchTerm.toLowerCase(),
                 pageRequest);
     }

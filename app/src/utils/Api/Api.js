@@ -19,5 +19,5 @@ export const User = {
    * Fetch all users
    * @returns Promise
    */
-  findAll: () => Axios.get(`/api/users`),
+  findAllPageable: (params) => Axios.get(`/api/users/`, { params }),
 };
