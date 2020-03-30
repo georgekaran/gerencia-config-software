@@ -20,6 +20,9 @@ public class JWTUtils {
 
         Date expiresAt = getExpirationTime();
 
+        if (ObjectUtils.nullOrEmpty(user.getEmail()))
+            throw new IllegalArgumentException("email cannot be null or empty string");
+
         String jwt = JWT.create()
                 .withClaim("email", user.getEmail())
                 .withExpiresAt(expiresAt)
