@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Switch, BrowserRouter as Router, Redirect} from "react-router-dom";
+import {Switch, BrowserRouter as Router, Redirect, Route} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 
 import Auth from "../layout/Auth";
@@ -10,6 +10,7 @@ import PublicRoute from "./PublicRoute";
 
 import { setAuth } from "../actions/authActions";
 import { isTokenExpirationDateValid, getAuth, removeAuth } from "../utils/TokenUtils";
+import routes from "./routes";
 
 export default function AppRouter() {
     const [isTokenValid, setTokenValid] = useState(false);
@@ -43,9 +44,16 @@ export default function AppRouter() {
     } else if (isTokenValid) {
         return (
           <Router>
-              <Switch>
-                  <PrivateRoute exact path="/" component={Admin} isAuth={isTokenValid} />
-              </Switch>
+              <Admin>
+                  <Switch>
+                      {routes.map(route => {
+                          console.log(route);
+                          return (
+                            <Route { ...route } path={route.path} />
+                          )
+                      })}
+                  </Switch>
+              </Admin>
           </Router>
         )
     } else {

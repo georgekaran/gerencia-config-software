@@ -4,7 +4,7 @@ import { Input as InputStrap } from "reactstrap";
 
 import './Input.scss';
 
-function Input({ name, type, placeholder, errors, register }) {
+function Input({ name, type, placeholder, errors, register, ...props }) {
   return (
     <>
       <InputStrap
@@ -12,6 +12,7 @@ function Input({ name, type, placeholder, errors, register }) {
         placeholder={placeholder}
         type={type}
         innerRef={register}
+        {...props}
       />
       <p className="input-info text-danger h6">
         {errors[name] && errors[name].message}

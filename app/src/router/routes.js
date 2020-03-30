@@ -1,4 +1,4 @@
-import Login from "../pages/Login/Login";
+import UserList from "../pages/User/UserList";
 import Home from "../pages/Home/Home";
 
 let routes = [
@@ -6,16 +6,15 @@ let routes = [
     path: "/",
     name: "Home",
     icon: "ni ni-tv-2 text-primary",
-    component: Home,
-    layout: "/admin",
-    privateRoute: true
+    exact: true,
+    component: Home
   },
   {
-    path: "/",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: Login,
-    privateRoute: false
+    path: "/users",
+    name: "Usuários",
+    icon: "ni ni-single-02 text-yellow",
+    component: UserList
   }
 ];
+
 export default routes;
