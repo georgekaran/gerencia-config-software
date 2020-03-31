@@ -24,8 +24,7 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<Item> save(@RequestBody Item item) {
         try {
-             if(item.getNome().length() < 5){
-              // if(true){
+             if (item.getNome().length() < 3) {
                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
              }
             item.setStatus('A');
