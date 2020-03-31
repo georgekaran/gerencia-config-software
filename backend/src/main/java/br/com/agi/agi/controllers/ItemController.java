@@ -24,9 +24,15 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<Item> save(@RequestBody Item item) {
         try {
+             if(item.getNome().length() < 5){
+              // if(true){
+                   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+             }
             item.setStatus('A');
             Item itemCreated = service.save(item);
             return ResponseEntity.status(HttpStatus.CREATED).body(itemCreated);
+         
+           
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
