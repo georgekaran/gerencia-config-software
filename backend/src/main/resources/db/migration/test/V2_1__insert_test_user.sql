@@ -1,0 +1,1 @@
+insert into usuario values (default, 'Test', 'test@test.com', '$2a$12$3i7.yFMycDzYA8ICzZJTweK2H1vqRiY1vSPKWmU0gpyvbgoDZX9ky','A');
