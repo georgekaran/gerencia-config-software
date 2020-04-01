@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import br.com.agi.agi.models.Item;
 import br.com.agi.agi.services.ItemService;
 import br.com.agi.agi.exceptions.NotFoundException;
+import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/api/itens")
@@ -24,9 +27,12 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<Item> save(@RequestBody Item item) {
         try {
-             if (item.getNome().length() < 3) {
+             if (item.getNome().length() < 3 || item.getValorUnitario() <=0) {
                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
              }
+             //if(item.getValorUnitario() >0){
+               //  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+             // }
             item.setStatus('A');
             Item itemCreated = service.save(item);
             return ResponseEntity.status(HttpStatus.CREATED).body(itemCreated);
@@ -37,6 +43,15 @@ public class ItemController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+ //@GetMapping()
+ //   public List<Item> getAllEnable() {
+ //       return service.findItemByActive(true);
+ //   }
+
+ //       @GetMapping("/disable")
+ //   public List<Item> getAllDisable() {
+ //       return service.findItemByActive(false);
+ //   }
 
     @PutMapping("/{id}")
     public ResponseEntity<Item> edit(@PathVariable("id") Long id, @RequestBody Item item) {

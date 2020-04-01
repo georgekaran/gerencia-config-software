@@ -37,7 +37,7 @@ public class ItemRepositoryTest  {
 
 
     @Test
-    public void test() {
+    public void validateName() {
         try {
             MvcResult result = mvc.perform(post("/login")
                                     .queryParam("username", "test@test.com")
@@ -49,18 +49,21 @@ public class ItemRepositoryTest  {
             Map<String, String> map = mapper.readValue(result.getResponse().getContentAsString(), Map.class);
 
             Item item = new Item();
-            item.setNome("aa");
+            item.setNome("aaaa");
             item.setValorUnitario(10.00);
 
             mvc.perform(post("/api/itens")
                     .header("Authorization", "Bearer " + map.get("token"))
                     .content(asJsonString(item))
                     .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isBadRequest());
+                    //.andExpect(status().isBadRequest());
+                    .andExpect(status().isCreated());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
+
+
 }

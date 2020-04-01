@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.agi.agi.models.Item;
 import br.com.agi.agi.repositories.ItemRepository;
+import java.util.List;
 
 @Service
 public class ItemService extends BaseService<Item, Long, ItemRepository> {
@@ -19,5 +20,12 @@ public class ItemService extends BaseService<Item, Long, ItemRepository> {
     public ItemService(ItemRepository ItemRepository) {
         super(ItemRepository);
     }
+    //public List<Item> findItemByActive(boolean isActive) {
+    //    return getBaseRepository().findItemByActive(isActive);
+   // }
+
+
+
+
 
 }
