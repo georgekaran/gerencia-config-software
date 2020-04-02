@@ -19,6 +19,7 @@ import { setAuth } from "../../actions/authActions";
 
 import Input from "../../components/Input/Input";
 import { User } from "../../utils/Api/Api";
+import ToastError from "../../components/Toast/ToastError";
 
 const LoginSchema = Yup.object().shape({
   username: Yup.string()
@@ -41,6 +42,11 @@ const Login = () => {
       })
       .catch(e => {
         console.error(e);
+        if (e.response) {
+          ToastError('Usuário ou senha inválidos');
+        } else {
+          ToastError('Falha ao contatar o servidor de autenticação!');
+        }
       });
   };
 
