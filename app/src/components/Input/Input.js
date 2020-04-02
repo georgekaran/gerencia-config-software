@@ -4,18 +4,19 @@ import { Input as InputStrap } from "reactstrap";
 
 import './Input.scss';
 
-function Input({ name, type, placeholder, errors, register, ...props }) {
+function Input({ name, type, placeholder, errors, register, className = '', ...props }) {
   return (
     <>
       <InputStrap
+        className={`${className} ${!!errors[name] && 'is-invalid'}`}
         name={name}
         placeholder={placeholder}
         type={type}
         innerRef={register}
         {...props}
       />
-      <p className="input-info text-danger h6">
-        {errors[name] && errors[name].message}
+      <p className="ml-md-1 text-danger h4 font-weight-300">
+        {!!errors[name] && errors[name].message}
       </p>
     </>
   );

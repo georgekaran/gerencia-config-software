@@ -2,6 +2,7 @@ package br.com.agi.agi.controllers;
 
 import java.util.Optional;
 
+import br.com.agi.agi.forms.UserProfileForm;
 import br.com.agi.agi.models.PasswordHelper;
 import br.com.agi.agi.services.ClientService;
 import br.com.agi.agi.utils.HashUtils;
@@ -50,6 +51,17 @@ public class UsuarioController {
         return user.get();
     }
 
+    @GetMapping("/id/{id}")
+    public Usuario getById(@PathVariable("id") Long id) {
+        Optional<Usuario> user = service.findOne(id);
+
+        if (!user.isPresent()) {
+            throw new NotFoundException();
+        }
+
+        return user.get();
+    }
+
     @GetMapping("/email/{email}")
     public boolean checkIfEmailExists(@PathVariable("email") String email) {
         Optional<Usuario> user = service.findByEmail(email);
@@ -74,7 +86,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody Usuario userBody) {
+    public ResponseEntity edit(@PathVariable("id") Long id, @RequestBody UserProfileForm userBody) {
         try {
             Optional<Usuario> user = service.findOne(id);
             if (!user.isPresent()) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User as UserAPI } from '../utils/Api/Api'
+import { User as UserAPI } from '../../utils/Api/Api'
 
 /**
  * Hook to fetch users.
@@ -11,7 +11,6 @@ const useFetchUsers = ({ search = "", page = 0, size = 10 }) => {
 
   useEffect(() => {
     UserAPI.findAllPageable({ search, page, size }).then((res) => {
-      console.log("useFetchUsers", res);
       setUsers(res.data);
     });
   }, [search, page, size]);

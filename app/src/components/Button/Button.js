@@ -9,8 +9,6 @@ const Button = ({ id = null, children, onClick = () => undefined, tooltip, ...pr
     return id ? id : uniqid('button');
   }, [id]);
 
-  console.log(btnId);
-
   return (
     <>
       <ButtonStrap {...props} id={btnId} onClick={onClick}>

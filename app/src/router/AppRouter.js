@@ -11,6 +11,7 @@ import PublicRoute from "./PublicRoute";
 import { setAuth } from "../actions/authActions";
 import { isTokenExpirationDateValid, getAuth, removeAuth } from "../utils/TokenUtils";
 import routes from "./routes";
+import { sortDescendingBy } from "../utils/ArrayUtils";
 
 export default function AppRouter() {
     const [isTokenValid, setTokenValid] = useState(false);
@@ -46,7 +47,7 @@ export default function AppRouter() {
           <Router>
               <Admin>
                   <Switch>
-                      {routes.map(route => {
+                      {sortDescendingBy(routes, "path").map(route => {
                           console.log(route);
                           return (
                             <Route { ...route } path={route.path} />

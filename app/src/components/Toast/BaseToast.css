@@ -1,0 +1,6 @@
+.Toastify__toast-custom-body {
+    margin:auto 0;
+    -ms-flex:1;
+    flex:1;
+    font-size: 12px !important;
+}

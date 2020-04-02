@@ -1,36 +1,61 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useEffect} from 'react';
 import { useForm } from "react-hook-form";
+import { useParams, useHistory } from "react-router-dom";
+import * as Yup from "yup";
+import {CardBody, Col, Form, FormGroup, Row} from "reactstrap";
 
+import { User as UserAPI } from "../../utils/Api/Api";
 import Base from "../../components/Base/Base";
 import BaseHeader from "../../components/Base/BaseHeader";
-import {CardBody, Col, Form, FormGroup, Row} from "reactstrap";
 import Input from "../../components/Input/Input";
+import useFetchUser from "../../hooks/users/useFetchUser";
+import Button from "../../components/Button/Button";
+import ToastSuccess from "../../components/Toast/ToastSuccess";
+import ToastError from "../../components/Toast/ToastError";
 
-const UserForm = props => {
-  const { register, handleSubmit, errors } = useForm();
+const UserFormSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Não é um email válido.")
+    .required("Campo obrigatório."),
+  nome: Yup.string().required("Campo obrigatório.")
+});
+
+const UserForm = () => {
+  const { id } = useParams();
+  const history = useHistory();
+  const user = useFetchUser(id);
+  const { register, handleSubmit, errors, reset } = useForm({ validationSchema: UserFormSchema });
 
   const handleFormSubmit = (data) => {
-    console.log("Data", data);
+    UserAPI.updateUser(id, data).then(res => {
+      history.push('/users');
+      ToastSuccess("Usuário editado com sucesso!");
+    }).catch(err => {
+      console.log(err);
+      ToastError("Usuário editado com sucesso!");
+    })
   };
+
+  useEffect(() => {
+    if (user) {
+      reset({ email: user.email, nome: user.nome });
+    }
+  }, [user]);
 
   return (
     <Base>
-      <BaseHeader title="Criar usuário"/>
+      <BaseHeader title={!!id ? "Editar usuário" : "Criar usuário"}/>
       <CardBody>
-        <Form handleSubmit={handleSubmit(handleFormSubmit)}>
-          <h6 className="heading-small text-muted mb-4">
-            User information
-          </h6>
+        <Form onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="pl-lg-4">
             <Row>
               <Col lg="6">
                 <FormGroup>
                   <label
                     className="form-control-label"
-                    htmlFor="input-username"
+                    htmlFor="input-nome"
                   >
-                    Username
+                    Nome
                   </label>
                   <Input
                     className="form-control-alternative"
@@ -49,12 +74,12 @@ const UserForm = props => {
                     className="form-control-label"
                     htmlFor="input-email"
                   >
-                    Email address
+                    Email
                   </label>
                   <Input
                     className="form-control-alternative"
                     id="input-email"
-                    placeholder="jesse@example.com"
+                    placeholder="seuemail@email.com"
                     type="email"
                     name="email"
                     register={register}
@@ -64,14 +89,18 @@ const UserForm = props => {
               </Col>
             </Row>
           </div>
+          <div className="d-flex justify-content-end">
+            <Button
+              type="submit"
+              color="info"
+            >
+              Salvar
+            </Button>
+          </div>
         </Form>
       </CardBody>
     </Base>
   );
-};
-
-UserForm.propTypes = {
-
 };
 
 export default UserForm;
