@@ -20,12 +20,12 @@ public class ItemService extends BaseService<Item, Long, ItemRepository> {
     public ItemService(ItemRepository ItemRepository) {
         super(ItemRepository);
     }
-    //public List<Item> findItemByActive(boolean isActive) {
-    //    return getBaseRepository().findItemByActive(isActive);
-   // }
 
-
-
-
+    public List<Item> findItemByActive(boolean isActive) {
+        char isAct = 'A';
+        if (!isActive)
+            isAct = 'E';
+        return getBaseRepository().findItemByActive(isAct);
+    }
 
 }

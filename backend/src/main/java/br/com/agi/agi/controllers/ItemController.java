@@ -43,15 +43,16 @@ public class ItemController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
- //@GetMapping()
- //   public List<Item> getAllEnable() {
- //       return service.findItemByActive(true);
- //   }
 
- //       @GetMapping("/disable")
- //   public List<Item> getAllDisable() {
- //       return service.findItemByActive(false);
- //   }
+    @GetMapping("/enable")
+    public List<Item> getAllEnable() {
+        return service.findItemByActive(true);
+    }
+
+    @GetMapping("/disable")
+    public List<Item> getAllDisable() {
+        return service.findItemByActive(false);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Item> edit(@PathVariable("id") Long id, @RequestBody Item item) {

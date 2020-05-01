@@ -13,6 +13,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Query;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
-//@Query(value = "select c from Item c where c.active = ?1")
-//    List<Item> findItemByActive(boolean active);
+    @Query(value = "select c from Item c where c.status = ?1")
+    List<Item> findItemByActive(char active);
 }
