@@ -2,6 +2,7 @@ package br.com.agi.agi.controllers;
 
 import java.util.Optional;
 
+import br.com.agi.agi.enums.ProjectConsts;
 import br.com.agi.agi.forms.UserProfileForm;
 import br.com.agi.agi.models.PasswordHelper;
 import br.com.agi.agi.services.ClientService;
@@ -106,7 +107,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity create(@RequestBody Usuario user) {
         try {
-            user.setSenha(HashUtils.hashPassword(user.getSenha()));
+            user.setSenha(HashUtils.hashPassword(ProjectConsts.DEFAULT_PASSWORD));
             user.setStatus('A');
             Usuario userCreated = service.save(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);

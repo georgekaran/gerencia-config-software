@@ -2,10 +2,7 @@ package br.com.agi.agi.controllers;
 
 import java.util.Optional;
 
-import br.com.agi.agi.services.ClientService;
-import br.com.agi.agi.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +11,6 @@ import br.com.agi.agi.models.Item;
 import br.com.agi.agi.services.ItemService;
 import br.com.agi.agi.exceptions.NotFoundException;
 import java.util.List;
-
-
 
 @RestController
 @RequestMapping("/api/itens")

@@ -1,3 +1,4 @@
+import './UserForm.scss';
 import React, {useEffect} from 'react';
 import { useForm } from "react-hook-form";
 import { useParams, useHistory } from "react-router-dom";
@@ -21,19 +22,23 @@ const UserFormSchema = Yup.object().shape({
 });
 
 const UserForm = () => {
-  const { id } = useParams();
+  const { id = null } = useParams();
   const history = useHistory();
   const user = useFetchUser(id);
   const { register, handleSubmit, errors, reset } = useForm({ validationSchema: UserFormSchema });
 
   const handleFormSubmit = (data) => {
-    UserAPI.updateUser(id, data).then(res => {
+    UserAPI.saveUser(id, data).then(res => {
       history.push('/users');
-      ToastSuccess("Usuário editado com sucesso!");
+      ToastSuccess("Usuário criado/editado com sucesso!");
     }).catch(err => {
       console.log(err);
-      ToastError("Usuário editado com sucesso!");
+      ToastError("Erro ao salvar informações!");
     })
+  };
+
+  const handleListUser = () => {
+    history.push(`/users/`);
   };
 
   useEffect(() => {
@@ -44,7 +49,13 @@ const UserForm = () => {
 
   return (
     <Base>
-      <BaseHeader title={!!id ? "Editar usuário" : "Criar usuário"}/>
+      <Row className="Row__Header">
+        <Button className="icon icon-shape bg-default text-white rounded-circle my-lg-auto"
+                onClick={handleListUser}>
+          <i className="fas fa-arrow-left" />
+        </Button>
+        <BaseHeader title={!!id ? "Editar usuário" : "Criar usuário"}/>
+      </Row>
       <CardBody>
         <Form onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="pl-lg-4">

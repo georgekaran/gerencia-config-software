@@ -32,6 +32,12 @@ export const User = {
    * @param data
    * @returns Promise
    */
-  updateUser: (id, data) => Axios.put(`/api/users/${id}`, data),
+  saveUser: (id, data) => {
+    return Axios({
+      method: id ? 'PUT' : 'POST',
+      url: id ? `/api/users/${id}` : '/api/users',
+      data
+    })
+  }
 
 };
