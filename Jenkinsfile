@@ -3,13 +3,15 @@ pipeline {
     options {
         skipStagesAfterUnstable()
     }
+    tools {
+        maven 'localmaven'
+    }
     stages {
         stage('Build - Backend') {
             steps {
-                sh 'ls'
                 sh 'cd backend'
-                sh '/bin/sh ./mvnw clean'
-                sh '/bin/sh ./mvnw package'
+                sh 'ls'
+                sh 'mvn clean package'
             }
         }
         stage('Test - Backend') {
