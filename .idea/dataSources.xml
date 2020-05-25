@@ -13,5 +13,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/agi_dev</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="agi_test@localhost" uuid="e58ad1b2-e499-4fd8-99b3-fa3f8885ca7a">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/agi_test</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -4,7 +4,7 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Build - Backend') {
+        stage('Build and Test - Backend') {
             steps {
                 dir("backend") {
                     sh './mvnw clean package'
