@@ -8,8 +8,8 @@ pipeline {
             steps {
                 sh 'ls'
                 sh 'cd backend'
-                sh './mvnw clean'
-                sh './mvnw package'
+                sh '/bin/sh ./mvnw clean'
+                sh '/bin/sh ./mvnw package'
             }
         }
         stage('Test - Backend') {
