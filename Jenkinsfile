@@ -6,9 +6,9 @@ pipeline {
     stages {
         stage('Build - Backend') {
             steps {
-                sh 'cd backend'
-                sh 'ls'
-                sh 'mvnw clean package'
+                dir("backend") {
+                    sh './mvnw clean package'
+                }
             }
         }
         stage('Test - Backend') {
