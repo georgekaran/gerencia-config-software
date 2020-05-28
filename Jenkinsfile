@@ -11,9 +11,13 @@ pipeline {
                 }
             }
         }
-        stage('Test - Backend') {
+        stage('Build and Test - App') {
             steps {
-                sh 'ls'
+                dir("app") {
+                    nodejs(nodeJSInstallationName: 'NODE_12')   {
+                        sh 'npm run build'
+                    }
+                }
             }
         }
 //         stage('Test'){
