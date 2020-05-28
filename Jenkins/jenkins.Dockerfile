@@ -1,4 +1,4 @@
-FROM jenkins/jenkins
+FROM jenkinsci/blueocean
 
 USER root
 
