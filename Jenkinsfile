@@ -15,6 +15,7 @@ pipeline {
             steps {
                 dir("app") {
                     nodejs(nodeJSInstallationName: 'NODE_12')   {
+                        sh 'npm i'
                         sh 'npm run build'
                     }
                 }
