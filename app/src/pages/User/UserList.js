@@ -1,5 +1,5 @@
 import './UserForm.scss';
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import { Row } from "reactstrap";
 import { useHistory } from 'react-router-dom';
@@ -15,6 +15,10 @@ import TableRow from "../../components/Table/TableRow";
 import TableCell from "../../components/Table/TableCell";
 import Table from "../../components/Table/Table";
 import Button from "../../components/Button/Button";
+import useClickOutside from "../../hooks/useClickOutside";
+import { User as UserAPI } from "../../utils/Api/Api";
+import ToastSuccess from "../../components/Toast/ToastSuccess";
+import ToastError from "../../components/Toast/ToastError";
 
 const initialState = {
   search: "",
@@ -26,23 +30,38 @@ const initialState = {
 const UserList = props => {
   const [pagination, setPagination] = useState(initialState);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [users] = useFetchUsers({ ...pagination });
+  const [users, triggerUpdate] = useFetchUsers({ ...pagination });
   const history = useHistory();
+  const [userToDelete, setUserToDelete] = useState(null);
 
   const handlePaginationChange = (futurePage) => {
-    console.log("Chamou", futurePage);
     setPagination(currentPagination => ({ ...currentPagination, page: futurePage }))
   };
 
   const handleDeleteUser = (user) => {
-    console.log("User", user);
+    setUserToDelete(user);
   };
+
+  const confirmDeleteUser = async () => {
+    const { data, status } = await UserAPI.deleteUser(userToDelete.id)
+    if (status === 200) {
+      ToastSuccess("Usuário deletado com sucesso!");
+    } else {
+      ToastError("Erro ao deletar usuário!");
+      console.error(data)
+    }
+    closeModal();
+    triggerUpdate();
+  }
+
+  const closeModal = () => {
+    setModalOpen(false)
+    setUserToDelete(null);
+  }
 
   const handleFormUser = (user = null) => {
     history.push(`/users/form/${user ? user.id : ''}`);
   };
-
-
 
   return (
     <>
@@ -82,7 +101,10 @@ const UserList = props => {
                     </Button>
                     <Button className="btn-icon btn-2"
                             color="danger"
-                            onClick={() => setModalOpen(true)}
+                            onClick={() => {
+                              handleDeleteUser(user);
+                              setModalOpen(true)
+                            }}
                             size="sm"
                             type="button"
                             tooltip="Excluir usuário">
@@ -100,13 +122,18 @@ const UserList = props => {
 
       <Modal isOpen={isModalOpen}
              autoFocus
+             toggle={closeModal}
              centered>
         <ModalHeader>
           <h3 className="mb-0">Exclusão de usuários</h3>
         </ModalHeader>
         <ModalBody>
-
+          <label>Você gostaria de excluir o usuário {userToDelete && userToDelete.nome}?</label>
         </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={confirmDeleteUser}>Sim</Button>{' '}
+          <Button color="secondary" onClick={closeModal}>Não</Button>
+        </ModalFooter>
       </Modal>
     </>
   )

@@ -14,7 +14,6 @@ export const removeAuth = () => {
 
 export const isTokenExpirationDateValid = () => {
     const auth = getAuth();
-    console.log("AUTH", auth);
     if (auth.expires_at == null || auth.token == null || auth.email == null) return false;
 
     return (new Date().getTime() < new Date(Number(auth.expires_at)).getTime());

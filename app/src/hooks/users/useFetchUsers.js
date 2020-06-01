@@ -15,7 +15,12 @@ const useFetchUsers = ({ search = "", page = 0, size = 10 }) => {
     });
   }, [search, page, size]);
 
-  return [users, setUsers];
+  const triggerUpdate = async () => {
+    const { data } = await UserAPI.findAllPageable({ search, page, size });
+    setUsers(data);
+  };
+
+  return [users, triggerUpdate];
 };
 
 export default useFetchUsers;

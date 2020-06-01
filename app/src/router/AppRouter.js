@@ -48,9 +48,8 @@ export default function AppRouter() {
               <Admin>
                   <Switch>
                       {sortDescendingBy(routes, "path").map(route => {
-                          console.log(route);
                           return (
-                            <Route { ...route } path={route.path} />
+                            <Route key={route.path} { ...route } path={route.path} />
                           )
                       })}
                   </Switch>

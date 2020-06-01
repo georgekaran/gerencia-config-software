@@ -6,8 +6,6 @@ import routes from '../router/routes';
 
 export default function Admin({ children, ...props }) {
 
-    console.log(props);
-
   return (
     <>
       <Sidebar

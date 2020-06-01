@@ -38,6 +38,13 @@ export const User = {
       url: id ? `/api/users/${id}` : '/api/users',
       data
     })
-  }
+  },
 
+  /**
+   * Deletes a user from the database.
+   *
+   * @param id User's id
+   * @returns Promise
+   */
+  deleteUser: (id) => Axios.delete(`/api/users/${id}`)
 };
