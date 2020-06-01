@@ -1,4 +1,4 @@
-import './ItemForm.scss';
+import './MethodPaymentForm.scss';
 import React, { useState } from 'react';
 import { Row } from "reactstrap";
 import { useHistory } from 'react-router-dom';
@@ -13,7 +13,7 @@ import TableRow from "../../components/Table/TableRow";
 import TableCell from "../../components/Table/TableCell";
 import Table from "../../components/Table/Table";
 import Button from "../../components/Button/Button";
-import {Item as ItemAPI} from "../../utils/Api/Api";
+import {FormaPagamento as FormaPagamentoAPI} from "../../utils/Api/Api";
 import ToastSuccess from "../../components/Toast/ToastSuccess";
 import ToastError from "../../components/Toast/ToastError";
 import FetchFactory from "../../hooks/FetchFactory";
@@ -24,27 +24,27 @@ const initialState = {
   size: 10,
 };
 
-const ItemList = props => {
+const MethodPaymentList = props => {
   const [pagination, setPagination] = useState(initialState);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [items, triggerUpdate] = FetchFactory.fetchItems({ ...pagination });
+  const [formasDePagamentos, triggerUpdate] = FetchFactory.fetchFormasPagamento({ ...pagination });
   const history = useHistory();
-  const [itemToDelete, setItemToDelete] = useState(null);
+  const [formaPagamentoToDelete, setFormaDePagamentoToDelete] = useState(null);
 
   const handlePaginationChange = (futurePage) => {
     setPagination(currentPagination => ({ ...currentPagination, page: futurePage }))
   };
 
-  const handleDeleteItem = (user) => {
-    setItemToDelete(user);
+  const handleDeleteFormaPagamento = (user) => {
+    setFormaDePagamentoToDelete(user);
   };
 
-  const confirmDeleteItem = async () => {
-    const { data, status } = await ItemAPI.delete(itemToDelete.id)
+  const confirmDeleteFormaDePagamento = async () => {
+    const { data, status } = await FormaPagamentoAPI.delete(formaPagamentoToDelete.id)
     if (status === 200) {
-      ToastSuccess("Item deletado com sucesso!");
+      ToastSuccess("Forma de pagamento deletada com sucesso!");
     } else {
-      ToastError("Erro ao deletar item!");
+      ToastError("Erro ao deletar forma de pagamento!");
       console.error(data)
     }
     closeModal();
@@ -53,11 +53,11 @@ const ItemList = props => {
 
   const closeModal = () => {
     setModalOpen(false)
-    setItemToDelete(null);
+    setFormaDePagamentoToDelete(null);
   }
 
-  const handleFormItem = (item = null) => {
-    history.push(`/items/form/${item ? item.id : ''}`);
+  const handleFormFormaPagamento = (formaPagamento = null) => {
+    history.push(`/forma-pagamento/form/${formaPagamento ? formaPagamento.id : ''}`);
   };
 
   return (
@@ -65,13 +65,13 @@ const ItemList = props => {
       <Base>
         <Row className="Row__Header">
           <Button className="icon icon-shape bg-primary text-white rounded-circle my-lg-auto"
-                  onClick={() => handleFormItem()}>
+                  onClick={() => handleFormFormaPagamento()}>
             <i className="fas fa-plus" />
           </Button>
-          <BaseHeader title="Itens"/>
+          <BaseHeader title="Forma de Pagamento"/>
         </Row>
 
-        <Table pageRequest={items} handlePaginationChange={handlePaginationChange} >
+        <Table pageRequest={formasDePagamentos} handlePaginationChange={handlePaginationChange} >
           <TableHead>
             <TableHeadRow>ID</TableHeadRow>
             <TableHeadRow>Nome</TableHeadRow>
@@ -79,19 +79,19 @@ const ItemList = props => {
             <TableHeadRow>Ações</TableHeadRow>
           </TableHead>
           <TableBody>
-            {items.content && items.content.map(item => {
+            {formasDePagamentos.content && formasDePagamentos.content.map(formaPagamento => {
               return (
-                <TableRow key={item.id}>
-                  <TableCell>{item.id}</TableCell>
-                  <TableCell>{item.nome}</TableCell>
-                  <TableCell>{item.valorUnitario}</TableCell>
+                <TableRow key={formaPagamento.id}>
+                  <TableCell>{formaPagamento.id}</TableCell>
+                  <TableCell>{formaPagamento.nome}</TableCell>
+                  <TableCell>{formaPagamento.email}</TableCell>
                   <TableCell>
                     <Button className="btn-icon btn-2"
                             color="success"
-                            onClick={() => handleFormItem(item)}
+                            onClick={() => handleFormFormaPagamento(formaPagamento)}
                             size="sm"
                             type="button"
-                            tooltip="Editar item">
+                            tooltip="Editar forma de pagamento">
                     <span className="btn-inner--icon">
                       <i className="fas fa-pencil-alt fa-stack-1x"/>
                     </span>
@@ -99,12 +99,12 @@ const ItemList = props => {
                     <Button className="btn-icon btn-2"
                             color="danger"
                             onClick={() => {
-                              handleDeleteItem(item);
+                              handleDeleteFormaPagamento(formaPagamento);
                               setModalOpen(true)
                             }}
                             size="sm"
                             type="button"
-                            tooltip="Excluir item">
+                            tooltip="Excluir forma de pagamento">
                     <span className="btn-inner--icon">
                       <i className="fas fa-trash-alt fa-stack-1x"/>
                     </span>
@@ -122,13 +122,13 @@ const ItemList = props => {
              toggle={closeModal}
              centered>
         <ModalHeader>
-          <h3 className="mb-0">Exclusão de itens</h3>
+          <h3 className="mb-0">Exclusão de forma de pagamento</h3>
         </ModalHeader>
         <ModalBody>
-          <label>Você gostaria de excluir o item {itemToDelete && itemToDelete.nome}?</label>
+          <label>Você gostaria de excluir a forma de pagamento {formaPagamentoToDelete && formaPagamentoToDelete.nome}?</label>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={confirmDeleteItem}>Sim</Button>{' '}
+          <Button color="primary" onClick={confirmDeleteFormaDePagamento}>Sim</Button>{' '}
           <Button color="secondary" onClick={closeModal}>Não</Button>
         </ModalFooter>
       </Modal>
@@ -136,8 +136,8 @@ const ItemList = props => {
   )
 };
 
-ItemList.propTypes = {
+MethodPaymentList.propTypes = {
   
 };
 
-export default ItemList;
+export default MethodPaymentList;

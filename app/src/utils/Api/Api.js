@@ -83,3 +83,38 @@ export const Item = {
    */
   delete: (id) => Axios.delete(`/api/itens/${id}`)
 };
+
+export const FormaPagamento = {
+  /**
+   * Fetch all methods of payment with pagination
+   * @returns Promise
+   */
+  findAllPageable: (params) => Axios.get(`/api/forma-pagamento/`, { params }),
+
+  /**
+   * @param id methods of payment's id
+   * @returns Promise
+   */
+  findById: (id) => Axios.get(`/api/forma-pagamento/${id}`),
+
+  /**
+   * @param id methods of payment's id
+   * @param data
+   * @returns Promise
+   */
+  save: (id, data) => {
+    return Axios({
+      method: id ? 'PUT' : 'POST',
+      url: id ? `/api/forma-pagamento/${id}` : '/api/forma-pagamento',
+      data
+    })
+  },
+
+  /**
+   * Deletes a method of payment from the database.
+   *
+   * @param id methods of payment's id
+   * @returns Promise
+   */
+  delete: (id) => Axios.delete(`/api/forma-pagamento/${id}`)
+};

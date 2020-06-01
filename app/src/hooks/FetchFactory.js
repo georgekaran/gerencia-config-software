@@ -1,4 +1,4 @@
-import { User as UserAPI, Item as ItemAPI } from '../utils/Api/Api';
+import { User as UserAPI, Item as ItemAPI, FormaPagamento as FormaPagamentoAPI } from '../utils/Api/Api';
 import useFetchAll from "./fetch/useFetchAll";
 import useFetchOne from "./fetch/useFetchOne";
 
@@ -18,6 +18,14 @@ class FetchFactory {
 
   static fetchItem(id) {
     return useFetchOne(id, ItemAPI);
+  }
+
+  static fetchFormasPagamento(props) {
+    return useFetchAll(props, FormaPagamentoAPI);
+  }
+
+  static fetchFormaPagamento(id) {
+    return useFetchOne(id, FormaPagamentoAPI);
   }
 
 }
