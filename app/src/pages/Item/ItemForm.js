@@ -1,11 +1,11 @@
-import './UserForm.scss';
+import './ItemForm.scss';
 import React, {useEffect} from 'react';
 import { useForm } from "react-hook-form";
 import { useParams, useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import {CardBody, Col, Form, FormGroup, Row} from "reactstrap";
 
-import { User as UserAPI } from "../../utils/Api/Api";
+import { Item as ItemAPI } from "../../utils/Api/Api";
 import Base from "../../components/Base/Base";
 import BaseHeader from "../../components/Base/BaseHeader";
 import Input from "../../components/Input/Input";
@@ -14,23 +14,21 @@ import ToastSuccess from "../../components/Toast/ToastSuccess";
 import ToastError from "../../components/Toast/ToastError";
 import FetchFactory from "../../hooks/FetchFactory";
 
-const UserFormSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Não é um email válido.")
-    .required("Campo obrigatório."),
-  nome: Yup.string().required("Campo obrigatório.")
+const ItemFormSchema = Yup.object().shape({
+  nome: Yup.string().required("Campo obrigatório."),
+  valorUnitario: Yup.number().positive('Valor unitário deve ser positivo.').required('Campo obrigatório.')
 });
 
-const UserForm = () => {
+const ItemForm = () => {
   const { id = null } = useParams();
   const history = useHistory();
-  const user = FetchFactory.fetchUser(id);
-  const { register, handleSubmit, errors, reset } = useForm({ validationSchema: UserFormSchema });
+  const item = FetchFactory.fetchItem(id);
+  const { register, handleSubmit, errors, reset } = useForm({ validationSchema: ItemFormSchema });
 
   const handleFormSubmit = (data) => {
-    UserAPI.saveUser(id, data).then(res => {
-      history.push('/users');
-      ToastSuccess("Usuário criado/editado com sucesso!");
+    ItemAPI.save(id, data).then(res => {
+      history.push('/items');
+      ToastSuccess("Item criado/editado com sucesso!");
     }).catch(err => {
       console.log(err);
       ToastError("Erro ao salvar informações!");
@@ -38,14 +36,14 @@ const UserForm = () => {
   };
 
   const handleListUser = () => {
-    history.push(`/users/`);
+    history.push(`/items/`);
   };
 
   useEffect(() => {
-    if (user) {
-      reset({ email: user.email, nome: user.nome });
+    if (item) {
+      reset({ nome: item.nome, valorUnitario: item.valorUnitario });
     }
-  }, [user]);
+  }, [item]);
 
   return (
     <Base>
@@ -54,7 +52,7 @@ const UserForm = () => {
                 onClick={handleListUser}>
           <i className="fas fa-arrow-left" />
         </Button>
-        <BaseHeader title={!!id ? "Editar usuário" : "Criar usuário"}/>
+        <BaseHeader title={!!id ? "Editar Item" : "Criar Item"}/>
       </Row>
       <CardBody>
         <Form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -83,16 +81,15 @@ const UserForm = () => {
                 <FormGroup>
                   <label
                     className="form-control-label"
-                    htmlFor="input-email"
+                    htmlFor="input-valorUnitario"
                   >
-                    Email
+                    Valor Unitário
                   </label>
                   <Input
                     className="form-control-alternative"
-                    id="input-email"
-                    placeholder="seuemail@email.com"
-                    type="email"
-                    name="email"
+                    id="input-valorUnitario"
+                    type="valorUnitario"
+                    name="valorUnitario"
                     register={register}
                     errors={errors}
                   />
@@ -114,4 +111,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default ItemForm;

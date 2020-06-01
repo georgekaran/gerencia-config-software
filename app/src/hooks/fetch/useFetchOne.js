@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { User as UserAPI } from '../../utils/Api/Api'
 
 /**
  * Hook to fetch users.
  *
  * @returns {object} user
  */
-const useFetchUser = (id) => {
+const useFetchOne = (id, Api) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
     if (id) {
-      UserAPI.findById(id).then((res) => {
+      Api.findById(id).then((res) => {
         setUser(res.data);
       });
     }
@@ -20,4 +19,4 @@ const useFetchUser = (id) => {
   return user;
 };
 
-export default useFetchUser;
+export default useFetchOne;

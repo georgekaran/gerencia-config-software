@@ -1,4 +1,4 @@
-import './UserForm.scss';
+import './ItemForm.scss';
 import React, { useState } from 'react';
 import { Row } from "reactstrap";
 import { useHistory } from 'react-router-dom';
@@ -13,7 +13,7 @@ import TableRow from "../../components/Table/TableRow";
 import TableCell from "../../components/Table/TableCell";
 import Table from "../../components/Table/Table";
 import Button from "../../components/Button/Button";
-import { User as UserAPI } from "../../utils/Api/Api";
+import {Item as ItemAPI} from "../../utils/Api/Api";
 import ToastSuccess from "../../components/Toast/ToastSuccess";
 import ToastError from "../../components/Toast/ToastError";
 import FetchFactory from "../../hooks/FetchFactory";
@@ -24,28 +24,27 @@ const initialState = {
   size: 10,
 };
 
-
-const UserList = props => {
+const ItemList = props => {
   const [pagination, setPagination] = useState(initialState);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [users, triggerUpdate] = FetchFactory.fetchUsers({ ...pagination });
+  const [items, triggerUpdate] = FetchFactory.fetchItems({ ...pagination });
   const history = useHistory();
-  const [userToDelete, setUserToDelete] = useState(null);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const handlePaginationChange = (futurePage) => {
     setPagination(currentPagination => ({ ...currentPagination, page: futurePage }))
   };
 
-  const handleDeleteUser = (user) => {
-    setUserToDelete(user);
+  const handleDeleteItem = (user) => {
+    setItemToDelete(user);
   };
 
-  const confirmDeleteUser = async () => {
-    const { data, status } = await UserAPI.deleteUser(userToDelete.id)
+  const confirmDeleteItem = async () => {
+    const { data, status } = await ItemAPI.delete(itemToDelete.id)
     if (status === 200) {
-      ToastSuccess("Usuário deletado com sucesso!");
+      ToastSuccess("Item deletado com sucesso!");
     } else {
-      ToastError("Erro ao deletar usuário!");
+      ToastError("Erro ao deletar item!");
       console.error(data)
     }
     closeModal();
@@ -54,11 +53,11 @@ const UserList = props => {
 
   const closeModal = () => {
     setModalOpen(false)
-    setUserToDelete(null);
+    setItemToDelete(null);
   }
 
-  const handleFormUser = (user = null) => {
-    history.push(`/users/form/${user ? user.id : ''}`);
+  const handleFormItem = (item = null) => {
+    history.push(`/items/form/${item ? item.id : ''}`);
   };
 
   return (
@@ -66,21 +65,21 @@ const UserList = props => {
       <Base>
         <Row className="Row__Header">
           <Button className="icon icon-shape bg-primary text-white rounded-circle my-lg-auto"
-                  onClick={() => handleFormUser()}>
+                  onClick={() => handleFormItem()}>
             <i className="fas fa-plus" />
           </Button>
-          <BaseHeader title="Usuários"/>
+          <BaseHeader title="Itens"/>
         </Row>
 
-        <Table pageRequest={users} handlePaginationChange={handlePaginationChange} >
+        <Table pageRequest={items} handlePaginationChange={handlePaginationChange} >
           <TableHead>
             <TableHeadRow>ID</TableHeadRow>
             <TableHeadRow>Nome</TableHeadRow>
-            <TableHeadRow>E-mail</TableHeadRow>
+            <TableHeadRow>Valor unitário</TableHeadRow>
             <TableHeadRow>Ações</TableHeadRow>
           </TableHead>
           <TableBody>
-            {users.content && users.content.map(user => {
+            {items.content && items.content.map(user => {
               return (
                 <TableRow key={user.id}>
                   <TableCell>{user.id}</TableCell>
@@ -89,10 +88,10 @@ const UserList = props => {
                   <TableCell>
                     <Button className="btn-icon btn-2"
                             color="success"
-                            onClick={() => handleFormUser(user)}
+                            onClick={() => handleFormItem(user)}
                             size="sm"
                             type="button"
-                            tooltip="Editar usuário">
+                            tooltip="Editar item">
                     <span className="btn-inner--icon">
                       <i className="fas fa-pencil-alt fa-stack-1x"/>
                     </span>
@@ -100,12 +99,12 @@ const UserList = props => {
                     <Button className="btn-icon btn-2"
                             color="danger"
                             onClick={() => {
-                              handleDeleteUser(user);
+                              handleDeleteItem(user);
                               setModalOpen(true)
                             }}
                             size="sm"
                             type="button"
-                            tooltip="Excluir usuário">
+                            tooltip="Excluir item">
                     <span className="btn-inner--icon">
                       <i className="fas fa-trash-alt fa-stack-1x"/>
                     </span>
@@ -123,13 +122,13 @@ const UserList = props => {
              toggle={closeModal}
              centered>
         <ModalHeader>
-          <h3 className="mb-0">Exclusão de usuários</h3>
+          <h3 className="mb-0">Exclusão de itens</h3>
         </ModalHeader>
         <ModalBody>
-          <label>Você gostaria de excluir o usuário {userToDelete && userToDelete.nome}?</label>
+          <label>Você gostaria de excluir o item {itemToDelete && itemToDelete.nome}?</label>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={confirmDeleteUser}>Sim</Button>{' '}
+          <Button color="primary" onClick={confirmDeleteItem}>Sim</Button>{' '}
           <Button color="secondary" onClick={closeModal}>Não</Button>
         </ModalFooter>
       </Modal>
@@ -137,8 +136,8 @@ const UserList = props => {
   )
 };
 
-UserList.propTypes = {
+ItemList.propTypes = {
   
 };
 
-export default UserList;
+export default ItemList;

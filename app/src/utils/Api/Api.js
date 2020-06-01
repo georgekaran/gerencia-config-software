@@ -48,3 +48,38 @@ export const User = {
    */
   deleteUser: (id) => Axios.delete(`/api/users/${id}`)
 };
+
+export const Item = {
+  /**
+   * Fetch all items with pagination
+   * @returns Promise
+   */
+  findAllPageable: (params) => Axios.get(`/api/itens/`, { params }),
+
+  /**
+   * @param id Item's id
+   * @returns Promise
+   */
+  findById: (id) => Axios.get(`/api/itens/${id}`),
+
+  /**
+   * @param id Item's id
+   * @param data
+   * @returns Promise
+   */
+  save: (id, data) => {
+    return Axios({
+      method: id ? 'PUT' : 'POST',
+      url: id ? `/api/itens/${id}` : '/api/itens',
+      data
+    })
+  },
+
+  /**
+   * Deletes a item from the database.
+   *
+   * @param id User's id
+   * @returns Promise
+   */
+  delete: (id) => Axios.delete(`/api/itens/${id}`)
+};

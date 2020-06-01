@@ -1,6 +1,8 @@
 import UserList from "../pages/User/UserList";
 import Home from "../pages/Home/Home";
 import UserForm from "../pages/User/UserForm";
+import ItemList from "../pages/Item/ItemList";
+import ItemForm from "../pages/Item/ItemForm";
 
 let routes = [
   {
@@ -27,6 +29,23 @@ let routes = [
     path: "/users/form/:id",
     showOnSideBar: false,
     component: UserForm
+  },
+  {
+    path: "/items",
+    name: "Itens",
+    icon: "ni ni-single-02 text-yellow",
+    showOnSideBar: true,
+    component: ItemList
+  },
+  {
+    path: "/items/form",
+    showOnSideBar: false,
+    component: ItemForm
+  },
+  {
+    path: "/items/form/:id",
+    showOnSideBar: false,
+    component: ItemForm
   }
 ];
 

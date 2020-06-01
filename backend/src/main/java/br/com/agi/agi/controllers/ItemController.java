@@ -3,6 +3,7 @@ package br.com.agi.agi.controllers;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,13 @@ public class ItemController {
 
     @Autowired
     private ItemService service;
+
+    @GetMapping("/")
+    public Page<Item> findAllPageable(@RequestParam(value = "search", required = false, defaultValue = "") String searchTerm,
+                                         @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                         @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        return service.findAllPageable(searchTerm, page, size);
+    }
 
     @PostMapping
     public ResponseEntity<Item> save(@RequestBody Item item) {
@@ -47,6 +55,17 @@ public class ItemController {
     @GetMapping("/disable")
     public List<Item> getAllDisable() {
         return service.findItemByActive(false);
+    }
+
+    @GetMapping("/{id}")
+    public Item getById(@PathVariable("id") Long id) {
+        Optional<Item> item = service.findOne(id);
+
+        if (!item.isPresent()) {
+            throw new NotFoundException();
+        }
+
+        return item.get();
     }
 
     @PutMapping("/{id}")
