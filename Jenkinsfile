@@ -32,7 +32,7 @@ pipeline {
                     sh 'cp target/*.jar docker/'
                 }
                 dir("app") {
-                    sh 'cp build docker/'
+                    sh 'cp -r build docker/'
                 }
                 script {
                     dockerImageApp = docker.build(registryApp + ":1.0.0","./app/docker")
