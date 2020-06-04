@@ -34,8 +34,6 @@ pipeline {
                 dir("app") {
                     sh 'cp build docker/'
                 }
-            }
-            steps {
                 script {
                     dockerImageApp = docker.build(registryApp + ":1.0.0","./app/docker")
                     dockerImageBackend = docker.build(registryBackend + ":1.0.0","./backend/docker")
