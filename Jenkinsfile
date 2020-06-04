@@ -14,10 +14,8 @@ pipeline {
         stage('Build and Test - App') {
             steps {
                 dir("app") {
-                    nodejs(nodeJSInstallationName: 'NODE_12')   {
-                        sh 'npm i'
-                        sh 'npm run build'
-                    }
+                    sh 'npm i'
+                    sh 'npm run build'
                 }
             }
         }

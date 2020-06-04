@@ -1,4 +1,4 @@
-FROM jenkinsci/blueocean
+FROM jenkins/jenkins:slim
 
 USER root
 
@@ -9,6 +9,11 @@ RUN mkdir /var/cache/jenkins
 RUN chown -R jenkins:jenkins /var/log/jenkins
 
 RUN chown -R jenkins:jenkins /var/cache/jenkins
+
+RUN apt update -y && \
+    apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates && \
+    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
+    apt -y install nodejs
 
 USER jenkins
 
