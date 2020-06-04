@@ -25,7 +25,7 @@ pipeline {
                     sh 'npm run build'
                 }
             }
-        },
+        }
         stage('Building Docker Images') {
             steps {
                 dir("backend") {
@@ -41,7 +41,7 @@ pipeline {
                     dockerImageBackend = docker.build(registryBackend + ":1.0.0","./backend/docker")
                 }
             }
-        },
+        }
         stage('Deploy Docker Images') {
             steps {
                 script {
@@ -51,7 +51,7 @@ pipeline {
                     }
                 }
             }
-        },
+        }
         stage('Remove Unused Docker Images') {
             steps {
                 sh "docker rmi $registryApp:1.0.0"
