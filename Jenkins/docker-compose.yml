@@ -7,6 +7,7 @@ services:
     volumes:
     - /home/george/Jenkins/log:/var/log/jenkins
     - /home/george/Jenkins/data:/var/jenkins_home
+    - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 8080:8080
     networks:
