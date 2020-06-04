@@ -30,7 +30,7 @@ pipeline {
             steps {
                 dir("backend") {
                     sh 'cp target/(*.jar) docker/'
-                },
+                }
                 dir("app") {
                     sh 'cp build docker/'
                 }
