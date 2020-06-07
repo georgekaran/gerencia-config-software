@@ -58,6 +58,19 @@ pipeline {
                 sh "docker rmi $registryBackend:${version}"
             }
         }
+        stage('Update Test Machine') {
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = 'test_machine'
+                    remote.host = '${env.TEST_HOST}'
+                    remote.user = '${env.TEST_USER}'
+                    remote.password = '${env.TEST_PASSWORD}'
+                    remote.allowAnyHosts = true
+                }
+                sshCommand remote: remote, command: "./opt/test.sh"
+            }
+        }
     }
 }
 
