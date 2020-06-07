@@ -5,7 +5,7 @@ pipeline {
         registryCredential = 'dockerhub'
         dockerImageApp = ''
         dockerImageBackend = ''
-        tagVersion = readMavenPom file: 'backend/pom.xml'
+        pomInfo = readMavenPom file: 'backend/pom.xml'
     }
     agent any
     options {
@@ -36,8 +36,8 @@ pipeline {
                     sh 'cp -r build docker/'
                 }
                 script {
-                    dockerImageApp = docker.build(registryApp + ":" + tagVersion,"./app/docker")
-                    dockerImageBackend = docker.build(registryBackend + ":" + tagVersion,"./backend/docker")
+                    dockerImageApp = docker.build(registryApp + ":" + pomInfo.version,"./app/docker")
+                    dockerImageBackend = docker.build(registryBackend + ":" + pomInfo.version,"./backend/docker")
                 }
             }
         }
@@ -53,8 +53,8 @@ pipeline {
         }
         stage('Remove Unused Docker Images') {
             steps {
-                sh "docker rmi $registryApp:$tagVersion"
-                sh "docker rmi $registryBackend:$tagVersion"
+                sh "docker rmi $registryApp:${pomInfo.version}"
+                sh "docker rmi $registryBackend:${pomInfo.version}"
             }
         }
     }
