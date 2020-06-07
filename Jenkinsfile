@@ -29,7 +29,7 @@ pipeline {
         stage('Building Docker Images') {
             steps {
                 dir("backend") {
-                    sh 'cp target/*.jar docker/'
+                    sh 'cp target/app.jar docker/app.jar'
                 }
                 dir("app") {
                     sh 'cp -r build docker/'
