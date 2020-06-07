@@ -61,12 +61,7 @@ pipeline {
         stage('Update Test Machine') {
             steps {
                 script {
-                    def remote = [:]
-                    remote.name = 'test_machine'
-                    remote.host = '${env.TEST_HOST}'
-                    remote.user = '${env.TEST_USER}'
-                    remote.password = '${env.TEST_PASSWORD}'
-                    remote.allowAnyHosts = true
+                    remote = remoteConnection()
                 }
                 sshCommand remote: remote, command: "./opt/test.sh"
             }
@@ -77,4 +72,14 @@ pipeline {
 def getVersion() {
     def pom = readMavenPom file: 'backend/pom.xml'
     return pom.version.replace("-SNAPSHOT", "")
+}
+
+def remoteConnection() {
+    def remote = [:]
+    remote.name = 'test_machine'
+    remote.host = '${env.TEST_HOST}'
+    remote.user = '${env.TEST_USER}'
+    remote.password = '${env.TEST_PASSWORD}'
+    remote.allowAnyHosts = true
+    return remote;
 }
