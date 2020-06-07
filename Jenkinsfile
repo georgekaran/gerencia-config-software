@@ -36,8 +36,8 @@ pipeline {
                     sh 'cp -r build docker/'
                 }
                 script {
-                    dockerImageApp = docker.build(registryApp + ":" + pomInfo.version,"./app/docker")
-                    dockerImageBackend = docker.build(registryBackend + ":" + pomInfo.version,"./backend/docker")
+                    dockerImageApp = docker.build(registryApp + ":${pomInfo.version}","./app/docker")
+                    dockerImageBackend = docker.build(registryBackend + ":${pomInfo.version}","./backend/docker")
                 }
             }
         }
