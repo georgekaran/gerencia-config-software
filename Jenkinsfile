@@ -59,9 +59,9 @@ pipeline {
             }
         }
     }
+}
 
-    def getVersion() {
-        def pom = readMavenPom file: 'backend/pom.xml'
-        return pom.version.replace("-SNAPSHOT", "")
-    }
+def getVersion() {
+    def pom = readMavenPom file: 'backend/pom.xml'
+    return pom.version.replace("-SNAPSHOT", "")
 }
