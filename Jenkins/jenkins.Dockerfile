@@ -28,7 +28,7 @@ RUN service docker start
 
 USER jenkins
 
-ENV JAVA_OPTS="-Xmx2048m"
+ENV JAVA_OPTS="-Xmx2048m -XX:MaxPermSize=512m"
 
 ENV JENKINS_OPTS="--handlerCountMax=300 --webroot=/var/cache/jenkins/war"
 
