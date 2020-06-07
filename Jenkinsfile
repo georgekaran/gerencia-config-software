@@ -5,7 +5,7 @@ pipeline {
         registryCredential = 'dockerhub'
         dockerImageApp = ''
         dockerImageBackend = ''
-        version = readMavenPom().getVersion() file: 'backend/pom.xml'
+        version = ''
     }
     agent any
     options {
@@ -36,6 +36,7 @@ pipeline {
                     sh 'cp -r build docker/'
                 }
                 script {
+                    version = getVersion()
                     dockerImageApp = docker.build(registryApp + ":${version}","./app/docker")
                     dockerImageBackend = docker.build(registryBackend + ":${version}","./backend/docker")
                 }
@@ -57,5 +58,10 @@ pipeline {
                 sh "docker rmi $registryBackend:${version}"
             }
         }
+    }
+
+    def getVersion() {
+        def pom = readMavenPom file: 'backend/pom.xml'
+        return pom.version.replace("-SNAPSHOT", "")
     }
 }
