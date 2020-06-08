@@ -63,7 +63,7 @@ pipeline {
                 script {
                     remote = remoteConnection()
                 }
-                sshCommand remote: remote, command: "./opt/test.sh"
+                sshCommand remote: remote, command: "wall TODO"
             }
         }
     }
@@ -77,9 +77,9 @@ def getVersion() {
 def remoteConnection() {
     def remote = [:]
     remote.name = 'test_machine'
-    remote.host = '${env.TEST_HOST}'
-    remote.user = '${env.TEST_USER}'
-    remote.password = '${env.TEST_PASSWORD}'
+    remote.host = env.TEST_HOST
+    remote.user = env.TEST_USER
+    remote.password = env.TEST_PASSWORD
     remote.allowAnyHosts = true
     return remote;
 }
