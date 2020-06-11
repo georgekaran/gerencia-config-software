@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.agi</groupId>
 	<artifactId>agi</artifactId>
-	<version>1.0.2</version>
+	<version>1.1.0</version>
 	<name>agi</name>
 	<description>AGI - PDV</description>
 
