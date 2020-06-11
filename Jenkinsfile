@@ -63,7 +63,11 @@ pipeline {
                 script {
                     remote = remoteConnection()
                 }
-                sshCommand remote: remote, command: "wall TODO"
+                sshCommand remote: remote, command: "cd /opt/app/ && \
+                                                     docker-compose down && \
+                                                     rm -f .env && \
+                                                     echo TAG=${version} > .env && \
+                                                     docker-compose up -d"
             }
         }
     }

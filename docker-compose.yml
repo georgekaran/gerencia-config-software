@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  gcs-app:
+    image: georgekaran/gcs-app:${TAG}
+    depends_on:
+      - gcs-backend
+    ports:
+      - 80:80
+    networks:
+      - app_network
+  gcs-backend:
+    image: georgekaran/gcs-backend:${TAG}
+    ports:
+      - 5000:5000
+    depends_on:
+      - gcs-postgres
+    networks:
+      - app_network
+  gcs-postgres:
+    image: postgres:12.2
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST_AUTH_METHOD=md5
+      - POSTGRES_DB=agi
+    ports:
+      - 5432:5432
+    volumes:
+      - /opt/gcs-postgres:/var/lib/postgresql/data
+    networks:
+      - app_network
+networks:
+  app_network:
+    driver: bridge

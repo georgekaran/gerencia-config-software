@@ -33,3 +33,13 @@ cd app/ && npm i
 Executar Front:
 ```
 cd app/ && npm run start
+```
+
+### Gerando uma release
+
+Dentro do root:
+```shell script
+./create-release-version VERSÃO_NOVA
+EX:
+./create-release-version 2.1.0
+```
