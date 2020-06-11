@@ -1,3 +1,5 @@
+import { version } from '../../../package.json';
+import './Login.scss';
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -20,6 +22,8 @@ import { setAuth } from "../../actions/authActions";
 import Input from "../../components/Input/Input";
 import { User } from "../../utils/Api/Api";
 import ToastError from "../../components/Toast/ToastError";
+
+const APP_VERSION = version || process.env.npm_package_version;
 
 const LoginSchema = Yup.object().shape({
   username: Yup.string()
@@ -100,6 +104,7 @@ const Login = () => {
               </div>
             </Form>
           </CardBody>
+          <h4 className="version-label">Versão: {APP_VERSION}</h4>
         </Card>
       </Col>
     </>
