@@ -11,10 +11,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface FormaPagamentoRepository extends JpaRepository<FormaPagamento, Long> {
-    @Query(value = "select c from Forma_de_pagamento c where c.status = ?1")
+    @Query(value = "select c from FormaPagamento c where c.status = ?1")
     List<FormaPagamento> findItemByActive(char active);
 
-    @Query("FROM Forma_de_pagamento u " +
+    @Query("FROM FormaPagamento u " +
             "WHERE LOWER(u.descricao) like %:searchTerm% and u.status <> 'I'")
     Page<FormaPagamento> findAllPageable(@Param("searchTerm") String searchTerm, Pageable pageable);
 }
