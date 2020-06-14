@@ -23,6 +23,7 @@ pipeline {
             steps {
                 dir("app") {
                     sh 'npm i'
+                    sh 'npm test'
                     sh 'npm run build'
                 }
             }

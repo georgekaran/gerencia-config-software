@@ -42,6 +42,7 @@ const Login = () => {
   const onSubmit = async body => {
     try {
       const { data } = await User.signIn(body);
+      dispatch(setAuth(data));
     } catch (e) {
       if (e.response) {
         ToastError('Usuário ou senha inválidos');
