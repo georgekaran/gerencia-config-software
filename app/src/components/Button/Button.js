@@ -18,6 +18,7 @@ const Button = ({ id = null,
   return (
     <>
       <ButtonStrap id={btnId}
+                   data-testid={btnId}
                    onClick={onClick}
                    className={`Button ${className}`}
                    {...props}>
