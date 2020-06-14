@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "qs": "^6.9.1",
     "react": "^16.13.0",
@@ -44,7 +41,12 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^9.5.0",
+    "mutationobserver-shim": "^0.3.7",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/user-event": "^7.1.2",
     "node-sass": "^4.13.1",
+    "react-test-renderer": "^16.13.1",
     "shelljs": "^0.8.3"
   }
 }

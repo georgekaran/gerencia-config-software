@@ -39,19 +39,16 @@ const Login = () => {
     validationSchema: LoginSchema
   });
 
-  const onSubmit = data => {
-    User.signIn(data)
-      .then(res => {
-        dispatch(setAuth(res.data));
-      })
-      .catch(e => {
-        console.error(e);
-        if (e.response) {
-          ToastError('Usuário ou senha inválidos');
-        } else {
-          ToastError('Falha ao contatar o servidor de autenticação!');
-        }
-      });
+  const onSubmit = async body => {
+    try {
+      const { data } = await User.signIn(body);
+    } catch (e) {
+      if (e.response) {
+        ToastError('Usuário ou senha inválidos');
+      } else {
+        ToastError('Falha ao contatar o servidor de autenticação!');
+      }
+    }
   };
 
   return (
@@ -73,6 +70,7 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                    data-testid="input-username"
                     name="username"
                     placeholder="Email"
                     type="email"
@@ -89,6 +87,7 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                    data-testid="input-password"
                     name="password"
                     placeholder="Senha"
                     type="password"
@@ -98,7 +97,7 @@ const Login = () => {
                 </InputGroup>
               </FormGroup>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="submit">
+                <Button data-testid="button-login" className="my-4" color="primary" type="submit">
                   Entrar
                 </Button>
               </div>
