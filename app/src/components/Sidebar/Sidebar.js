@@ -191,29 +191,6 @@ const Sidebar = () => {
           <Nav navbar>{createLinks(routes)}</Nav>
           {/* Divider */}
           <hr className="my-3" />
-          {/* Heading */}
-          <SidebarHeading title="Documentation" />
-          {/* Navigation */}
-          <Nav className="mb-md-3" navbar>
-            <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/overview?ref=adr-admin-sidebar">
-                <i className="ni ni-spaceship" />
-                Getting started
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/colors?ref=adr-admin-sidebar">
-                <i className="ni ni-palette" />
-                Foundation
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/alerts?ref=adr-admin-sidebar">
-                <i className="ni ni-ui-04" />
-                Components
-              </NavLink>
-            </NavItem>
-          </Nav>
         </Collapse>
       </Container>
     </Navbar>
@@ -223,22 +200,5 @@ const Sidebar = () => {
 Sidebar.defaultProps = {
   routes: [{}]
 };
-
-// Sidebar.propTypes = {
-//   // links that will be displayed inside the component
-//   routes: PropTypes.arrayOf(PropTypes.object),
-//   logo: PropTypes.shape({
-//     // innerLink is for links that will direct the user within the app
-//     // it will be rendered as <Link to="...">...</Link> tag
-//     innerLink: PropTypes.string,
-//     // outterLink is for links that will direct the user outside the app
-//     // it will be rendered as simple <a href="...">...</a> tag
-//     outterLink: PropTypes.string,
-//     // the image src of the logo
-//     imgSrc: PropTypes.string.isRequired,
-//     // the alt for the img
-//     imgAlt: PropTypes.string.isRequired
-//   })
-// };
 
 export default Sidebar;
