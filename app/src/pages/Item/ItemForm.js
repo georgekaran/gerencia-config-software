@@ -43,6 +43,7 @@ const ItemForm = () => {
     if (item) {
       reset({ nome: item.nome, valorUnitario: item.valorUnitario });
     }
+    // eslint-disable-next-line
   }, [item]);
 
   return (

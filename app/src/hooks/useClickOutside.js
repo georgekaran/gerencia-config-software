@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 // Generic hook to perform action on click outside element
 const useClickOutside = (fn = () => undefined, shouldTrigger = true) => {

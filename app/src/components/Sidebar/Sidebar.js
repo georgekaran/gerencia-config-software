@@ -28,10 +28,6 @@ import {
 import SidebarHeading from "./SidebarHeading";
 
 const Sidebar = () => {
-  // verifies if routeName is the one active (in browser input)
-  const activeRoute = (routeName) => {
-    //return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  };
   // toggles collapse between opened and closed (true/false)
   const toggleCollapse = () => {
     // collapseOpen: !this.state.collapseOpen
@@ -82,7 +78,7 @@ const Sidebar = () => {
 
           <NavbarBrand className="pt-0" {...navbarBrandProps}>
             <img
-              alt={null}
+              alt={"Brand"}
               className="navbar-brand-img"
               src={getLogo()}
             />

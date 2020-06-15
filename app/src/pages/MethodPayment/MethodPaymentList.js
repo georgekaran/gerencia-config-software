@@ -75,7 +75,6 @@ const MethodPaymentList = props => {
           <TableHead>
             <TableHeadRow>ID</TableHeadRow>
             <TableHeadRow>Nome</TableHeadRow>
-            <TableHeadRow>Valor unitário</TableHeadRow>
             <TableHeadRow>Ações</TableHeadRow>
           </TableHead>
           <TableBody>
@@ -83,8 +82,7 @@ const MethodPaymentList = props => {
               return (
                 <TableRow key={formaPagamento.id}>
                   <TableCell>{formaPagamento.id}</TableCell>
-                  <TableCell>{formaPagamento.nome}</TableCell>
-                  <TableCell>{formaPagamento.email}</TableCell>
+                  <TableCell>{formaPagamento.descricao}</TableCell>
                   <TableCell>
                     <Button className="btn-icon btn-2"
                             color="success"
@@ -125,7 +123,7 @@ const MethodPaymentList = props => {
           <h3 className="mb-0">Exclusão de forma de pagamento</h3>
         </ModalHeader>
         <ModalBody>
-          <label>Você gostaria de excluir a forma de pagamento {formaPagamentoToDelete && formaPagamentoToDelete.nome}?</label>
+          <label>Você gostaria de excluir a forma de pagamento {formaPagamentoToDelete && formaPagamentoToDelete.descricao}?</label>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={confirmDeleteFormaDePagamento}>Sim</Button>{' '}

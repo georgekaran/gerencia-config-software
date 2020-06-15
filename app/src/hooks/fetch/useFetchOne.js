@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Hook to fetch users.
@@ -14,7 +14,7 @@ const useFetchOne = (id, Api) => {
         setUser(res.data);
       });
     }
-  }, [id]);
+  }, [id, Api]);
 
   return user;
 };

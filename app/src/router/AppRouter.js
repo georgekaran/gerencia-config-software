@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import Auth from "../layout/Auth";
 import Admin from "../layout/Admin";
 
-import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
 import { setAuth } from "../actions/authActions";
@@ -22,6 +21,7 @@ export default function AppRouter() {
 
     useEffect(() => {
         handleAuthFetching();
+        // eslint-disable-next-line
     }, [auth]);
 
     const handleAuthFetching = async () => {

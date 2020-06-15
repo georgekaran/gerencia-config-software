@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Hook to fetch users.
@@ -12,7 +12,7 @@ const useFetchAll = ({ search = "", page = 0, size = 10 }, Api) => {
     Api.findAllPageable({ search, page, size }).then((res) => {
       setData(res.data);
     });
-  }, [search, page, size]);
+  }, [search, page, size, Api]);
 
   const triggerUpdate = async () => {
     const { data } = await Api.findAllPageable({ search, page, size });

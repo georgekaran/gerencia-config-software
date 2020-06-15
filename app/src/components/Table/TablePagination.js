@@ -36,7 +36,7 @@ const TablePagination = ({ last, first, totalPages = 1, number = 0, handlePagina
           {totalPagesArray.map(page => {
             const pageNumber = page + 1;
             return (
-              <PaginationItem className="active" disabled={isCurrentPage(pageNumber)}>
+              <PaginationItem key={pageNumber} className="active" disabled={isCurrentPage(pageNumber)}>
                 <PaginationLink
                   onClick={() => handlePaginationItemClick(pageNumber - 1)}
                 >

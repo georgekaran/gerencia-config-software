@@ -89,13 +89,13 @@ export const FormaPagamento = {
    * Fetch all methods of payment with pagination
    * @returns Promise
    */
-  findAllPageable: (params) => Axios.get(`/api/forma-pagamento/`, { params }),
+  findAllPageable: (params) => Axios.get(`/api/formapagamento/`, { params }),
 
   /**
    * @param id methods of payment's id
    * @returns Promise
    */
-  findById: (id) => Axios.get(`/api/forma-pagamento/${id}`),
+  findById: (id) => Axios.get(`/api/formapagamento/${id}`),
 
   /**
    * @param id methods of payment's id
@@ -105,7 +105,7 @@ export const FormaPagamento = {
   save: (id, data) => {
     return Axios({
       method: id ? 'PUT' : 'POST',
-      url: id ? `/api/forma-pagamento/${id}` : '/api/forma-pagamento',
+      url: id ? `/api/formapagamento/${id}` : '/api/formapagamento',
       data
     })
   },
@@ -116,5 +116,5 @@ export const FormaPagamento = {
    * @param id methods of payment's id
    * @returns Promise
    */
-  delete: (id) => Axios.delete(`/api/forma-pagamento/${id}`)
+  delete: (id) => Axios.delete(`/api/formapagamento/${id}`)
 };

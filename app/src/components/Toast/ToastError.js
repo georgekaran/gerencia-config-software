@@ -1,4 +1,3 @@
-import React from 'react';
 import BaseToast from "./BaseToast";
 
 let toastId = null;

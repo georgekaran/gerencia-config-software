@@ -15,8 +15,7 @@ import ToastError from "../../components/Toast/ToastError";
 import FetchFactory from "../../hooks/FetchFactory";
 
 const FormaPagamentoFormSchema = Yup.object().shape({
-  nome: Yup.string().required("Campo obrigatório."),
-  valorUnitario: Yup.number().positive('Valor unitário deve ser positivo.').required('Campo obrigatório.')
+  descricao: Yup.string().required("Campo obrigatório.")
 });
 
 const MethodPaymentForm = () => {
@@ -41,8 +40,9 @@ const MethodPaymentForm = () => {
 
   useEffect(() => {
     if (formaPagamento) {
-      reset({ nome: formaPagamento.nome, valorUnitario: formaPagamento.valorUnitario });
+      reset({ descricao: formaPagamento.descricao });
     }
+    // eslint-disable-next-line
   }, [formaPagamento]);
 
   return (
@@ -58,7 +58,7 @@ const MethodPaymentForm = () => {
         <Form onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="pl-lg-4">
             <Row>
-              <Col lg="6">
+              <Col lg="12">
                 <FormGroup>
                   <label
                     className="form-control-label"
@@ -68,28 +68,11 @@ const MethodPaymentForm = () => {
                   </label>
                   <Input
                     className="form-control-alternative"
-                    name="nome"
+                    name="descricao"
                     placeholder="Nome"
                     type="text"
                     id="input-nome"
-                    register={register}
-                    errors={errors}
-                  />
-                </FormGroup>
-              </Col>
-              <Col lg="6">
-                <FormGroup>
-                  <label
-                    className="form-control-label"
-                    htmlFor="input-valorUnitario"
-                  >
-                    Valor Unitário
-                  </label>
-                  <Input
-                    className="form-control-alternative"
-                    id="input-valorUnitario"
-                    type="valorUnitario"
-                    name="valorUnitario"
+                    data-testid="input-descricao"
                     register={register}
                     errors={errors}
                   />

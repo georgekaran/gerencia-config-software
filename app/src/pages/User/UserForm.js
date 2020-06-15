@@ -45,6 +45,7 @@ const UserForm = () => {
     if (user) {
       reset({ email: user.email, nome: user.nome });
     }
+    // eslint-disable-next-line
   }, [user]);
 
   return (
