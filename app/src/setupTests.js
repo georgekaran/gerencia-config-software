@@ -7,6 +7,7 @@ import store from "./store/configureStore";
 import { Provider } from "react-redux";
 import React from "react";
 import 'mutationobserver-shim';
+import { useForm } from "react-hook-form";
 
 jest.mock('./utils/Api/Api');
 
@@ -21,5 +22,23 @@ global.wrapComponentWithRedux = (Component) => {
         </Provider>
     )
 };
+
+global.formWrapper = (Component, schemaValidation) => {
+    return function ComposedComponent(props) {
+        const onSubmit = data => {
+            console.log(data);
+        };
+        const { register, handleSubmit, errors } = useForm({
+            validationSchema: schemaValidation,
+            mode: 'onChange',
+            reValidateMode: 'onChange'
+        });
+        return (
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <Component register={register} errors={errors} {...props} />
+            </form>
+        )
+    }
+}
 
 global.MutationObserver = window.MutationObserver;

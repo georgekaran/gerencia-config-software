@@ -16,7 +16,7 @@ import FetchFactory from "../../hooks/FetchFactory";
 
 const ItemFormSchema = Yup.object().shape({
   nome: Yup.string().required("Campo obrigatório."),
-  valorUnitario: Yup.number().positive('Valor unitário deve ser positivo.').required('Campo obrigatório.')
+  valorUnitario: Yup.number().typeError("Deve ser um número").positive('Valor unitário deve ser positivo.').required('Campo obrigatório.')
 });
 
 const ItemForm = () => {
@@ -72,6 +72,7 @@ const ItemForm = () => {
                     placeholder="Nome"
                     type="text"
                     id="input-nome"
+                    data-testid="input-nome"
                     register={register}
                     errors={errors}
                   />
@@ -88,6 +89,7 @@ const ItemForm = () => {
                   <Input
                     className="form-control-alternative"
                     id="input-valorUnitario"
+                    data-testid="input-valorUnitario"
                     type="valorUnitario"
                     name="valorUnitario"
                     register={register}
@@ -101,6 +103,7 @@ const ItemForm = () => {
             <Button
               type="submit"
               color="info"
+              data-testid="button-submit"
             >
               Salvar
             </Button>

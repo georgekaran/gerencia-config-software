@@ -27,7 +27,7 @@ Input.propTypes = {
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   errors: PropTypes.object,
-  register: PropTypes.element.isRequired
+  register: PropTypes.func.isRequired
 };
 
 export default Input;
