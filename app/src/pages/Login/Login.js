@@ -58,7 +58,7 @@ const Login = () => {
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-1">
             <div className="text-muted text-center mt-2 mb-3">
-              <h2>AGI - PDV</h2>
+              <h2>AGI - PDV - 2</h2>
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
