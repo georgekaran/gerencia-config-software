@@ -30,9 +30,11 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<Item> save(@RequestBody Item item) {
         try {
-             if (item.getNome().length() < 3 || item.getValorUnitario() <=0) {
+             if (item.getNome().length() < 3 || item.getValorUnitario() <=0 || item.getValorUnitario() >= 9999999) {
                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
              }
+
+            
              //if(item.getValorUnitario() >0){
                //  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
              // }
@@ -94,6 +96,10 @@ public class ItemController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Item> delete(@PathVariable("id") Long id) {
         try {
+            if(id < 0){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+
             Optional<Item> item = service.findOne(id);
             if (!item.isPresent()) {
                 throw new NotFoundException();

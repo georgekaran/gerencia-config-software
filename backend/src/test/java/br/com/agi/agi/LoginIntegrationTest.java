@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.*;
         classes = AgiApplication.class)
 @AutoConfigureMockMvc
 @TestPropertySource(
-        locations = "classpath:application-integrationtest.properties")
+        locations = {"classpath:application-integrationtest.properties"})
 public class LoginIntegrationTest {
 
     @Autowired

@@ -1,8 +1,8 @@
 package br.com.agi.agi.repositories;
 
 import br.com.agi.agi.AgiApplication;
-import br.com.agi.agi.models.Item;
-import br.com.agi.agi.controllers.ItemController;
+import br.com.agi.agi.models.FormaPagamento;
+import br.com.agi.agi.controllers.FormaPagamentoController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 @TestPropertySource(
         locations = {"classpath:application-integrationtest.properties"})
-public class ItemRepositoryTest  {
+public class FormaPagamentoRepositoryTest  {
 
 
     @Autowired
@@ -48,13 +48,13 @@ public class ItemRepositoryTest  {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> map = mapper.readValue(result.getResponse().getContentAsString(), Map.class);
 
-            Item item = new Item();
-            item.setNome("aaaa");
-            item.setValorUnitario(10.00);
+            FormaPagamento forma = new FormaPagamento();
+            forma.setDescricao("aaaa");
+            
 
-            mvc.perform(post("/api/itens")
+            mvc.perform(post("/api/formapagamento")
                     .header("Authorization", "Bearer " + map.get("token"))
-                    .content(asJsonString(item))
+                    .content(asJsonString(forma))
                     .contentType(MediaType.APPLICATION_JSON))
                     //.andExpect(status().isBadRequest());
                     .andExpect(status().isCreated());
@@ -65,7 +65,125 @@ public class ItemRepositoryTest  {
 
     }
 
+     @Test
+    public void validateNameFail() {
+        try {
+            MvcResult result = mvc.perform(post("/login")
+                                    .queryParam("username", "test@test.com")
+                                    .queryParam("password", "123456")
+                                    .contentType(MediaType.APPLICATION_JSON))
+                                    .andReturn();
 
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> map = mapper.readValue(result.getResponse().getContentAsString(), Map.class);
+
+            FormaPagamento forma = new FormaPagamento();
+            forma.setDescricao("aa");
+            
+
+            mvc.perform(post("/api/formapagamento")
+                    .header("Authorization", "Bearer " + map.get("token"))
+                    .content(asJsonString(forma))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
+                    //.andExpect(status().isCreated());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+     @Test
+    public void validateNameToLongFail() {
+        try {
+            MvcResult result = mvc.perform(post("/login")
+                                    .queryParam("username", "test@test.com")
+                                    .queryParam("password", "123456")
+                                    .contentType(MediaType.APPLICATION_JSON))
+                                    .andReturn();
+
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> map = mapper.readValue(result.getResponse().getContentAsString(), Map.class);
+
+            FormaPagamento forma = new FormaPagamento();
+            forma.setDescricao("aaaabbbbccccddddeeeeffffgggghhhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvvxxxxzzzzaaaabbbbccccddddeeeeffffgggghhhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvvxxxxzzzzaaaabbbbccccddddeeeeffffgggghhhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvvxxxxzzzz");
+            
+
+            mvc.perform(post("/api/formapagamento")
+                    .header("Authorization", "Bearer " + map.get("token"))
+                    .content(asJsonString(forma))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
+                    //.andExpect(status().isCreated());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+       @Test
+    public void validateDelete() {
+        try {
+            MvcResult result = mvc.perform(post("/login")
+                                    .queryParam("username", "test@test.com")
+                                    .queryParam("password", "123456")
+                                    .contentType(MediaType.APPLICATION_JSON))
+                                    .andReturn();
+
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> map = mapper.readValue(result.getResponse().getContentAsString(), Map.class);
+
+            FormaPagamento forma = new FormaPagamento();
+            forma.setDescricao("aaaa");
+            
+
+            mvc.perform(delete("/api/formapagamento/0")
+                    .header("Authorization", "Bearer " + map.get("token"))
+                    .content(asJsonString(forma))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
+                    //.andExpect(status().isCreated());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+      /*
+       @Test
+    public void validateDeleteFail() {
+        try {
+            MvcResult result = mvc.perform(post("/login")
+                                    .queryParam("username", "test@test.com")
+                                    .queryParam("password", "123456")
+                                    .contentType(MediaType.APPLICATION_JSON))
+                                    .andReturn();
+
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> map = mapper.readValue(result.getResponse().getContentAsString(), Map.class);
+
+            FormaPagamento forma = new FormaPagamento();
+            forma.setDescricao("aaaa");
+            
+
+            mvc.perform(delete("/api/formapagamento/")
+                    .header("Authorization", "Bearer " + map.get("token"))
+                    .content(asJsonString(forma))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    //.andExpect(status().isBadRequest());
+                    .andExpect(status().isCreated());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+*/
+/*
     @Test
     public void validateNameFail() {
         try {
@@ -181,36 +299,8 @@ public class ItemRepositoryTest  {
         }
 
     }
+    */
 
-
-       @Test
-    public void validateDeleteFail() {
-        try {
-            MvcResult result = mvc.perform(post("/login")
-                                    .queryParam("username", "test@test.com")
-                                    .queryParam("password", "123456")
-                                    .contentType(MediaType.APPLICATION_JSON))
-                                    .andReturn();
-
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, String> map = mapper.readValue(result.getResponse().getContentAsString(), Map.class);
-
-            Item item = new Item();
-            item.setNome("aaaa");
-            
-
-            mvc.perform(delete("/api/itens/0")
-                    .header("Authorization", "Bearer " + map.get("token"))
-                    .content(asJsonString(item))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isBadRequest());
-                    //.andExpect(status().isCreated());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
 
 }

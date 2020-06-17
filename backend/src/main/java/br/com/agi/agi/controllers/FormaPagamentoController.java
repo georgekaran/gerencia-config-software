@@ -71,6 +71,9 @@ public class FormaPagamentoController {
     @PutMapping("/{id}")
     public ResponseEntity<FormaPagamento> edit(@PathVariable("id") Long id, @RequestBody FormaPagamento formaPagamento) {
         try {
+            if(id <1){
+                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
             Optional<FormaPagamento> formaOptional = service.findOne(id);
 
             if (!formaOptional.isPresent()) {
