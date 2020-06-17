@@ -38,7 +38,7 @@ pipeline {
                 }
                 script {
                     version = getVersion()
-                    dockerImageApp = docker.build(registryApp + ":${version}","-f docker/Dockerfile ./app")
+                    dockerImageApp = docker.build(registryApp + ":${version}","-f ./docker/Dockerfile ./app")
                     dockerImageBackend = docker.build(registryBackend + ":${version}","./backend/docker")
                 }
             }
