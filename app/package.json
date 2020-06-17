@@ -20,6 +20,7 @@
     "yup": "^0.28.3"
   },
   "scripts": {
+    "start:local": "REACT_APP_URL=\"127.0.0.1\" npm run start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

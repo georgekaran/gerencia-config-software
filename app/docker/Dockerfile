@@ -1,7 +1,11 @@
-FROM nginx:stable
+FROM node:12
 
-EXPOSE 80
+EXPOSE 3000
 
-COPY default.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
-COPY build/ /usr/share/nginx/html
+COPY ../ .
+
+RUN npm install
+
+CMD [ "npm", "run", "start" ]

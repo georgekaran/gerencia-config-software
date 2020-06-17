@@ -4,8 +4,10 @@ services:
     image: georgekaran/gcs-app:${TAG}
     depends_on:
       - gcs-backend
+    environment:
+      - REACT_APP_URL=178.128.150.159
     ports:
-      - 80:80
+      - 80:3000
     networks:
       - app_network
   gcs-backend:
