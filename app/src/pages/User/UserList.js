@@ -69,7 +69,7 @@ const UserList = props => {
                   onClick={() => handleFormUser()}>
             <i className="fas fa-plus" />
           </Button>
-          <BaseHeader title="Usuários - George"/>
+          <BaseHeader title="Usuários - Andrei"/>
         </Row>
 
         <Table pageRequest={users} handlePaginationChange={handlePaginationChange} >
